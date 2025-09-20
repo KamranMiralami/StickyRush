@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : SingletonBehaviour<PlayerManager>
 {
-    [Header("Animations")]
-    [SerializeField] GameObject upAnimation;
-    [SerializeField] GameObject downAnimation;
+    //Animations
+    SetDirectionalAnimations animationControllerScript;
     
     public Action<Vector2> OnSwipeDirection;
     [SerializeField] float minSwipeDistance = 10f;
@@ -16,6 +15,14 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     bool isMoving = false;
     bool canMove = true;
     Tween moveTween;
+
+    private void Start()
+    {
+        animationControllerScript = GetComponent<SetDirectionalAnimations>();
+        if (!animationControllerScript)
+            Debug.Log("In order to use animations on this, you need a SetDirectionalAnimations script", this);
+    }
+    
     protected override void Awake()
     {
         base.Awake();
@@ -27,27 +34,12 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     {
         CheckSwipeLogic();
     }
-
-    private void TurnOffAllAnimations()
-    {
-        upAnimation.SetActive(false);
-        downAnimation.SetActive(false);
-    }
     
     private void OnPlayerSwipe(Vector2 dir)
     {
-        //Change animation according to direction 
-        //TODO test if this works, should work, but can't get OnPlayerSwipe to be called
-        if (dir == Vector2.up)
-        {
-            TurnOffAllAnimations();
-            upAnimation.SetActive(true);
-        }
-        else if (dir == Vector2.down)
-        {
-            TurnOffAllAnimations();
-            downAnimation.SetActive(true);
-        }
+        //Animations
+        if (animationControllerScript)
+            animationControllerScript.SetDirection(dir);
         
         // cast a ray only against walls
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 100f, LayerMask.GetMask("Wall"));
