@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerManager : SingletonBehaviour<PlayerManager>
 {
+    [Header("Animations")]
+    [SerializeField] GameObject upAnimation;
+    [SerializeField] GameObject downAnimation;
+    
     public Action<Vector2> OnSwipeDirection;
     [SerializeField] float minSwipeDistance = 10f;
     [SerializeField] float movementSpeed = 10f;
@@ -23,8 +27,28 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     {
         CheckSwipeLogic();
     }
+
+    private void TurnOffAllAnimations()
+    {
+        upAnimation.SetActive(false);
+        downAnimation.SetActive(false);
+    }
+    
     private void OnPlayerSwipe(Vector2 dir)
     {
+        //Change animation according to direction 
+        //TODO test if this works, should work, but can't get OnPlayerSwipe to be called
+        if (dir == Vector2.up)
+        {
+            TurnOffAllAnimations();
+            upAnimation.SetActive(true);
+        }
+        else if (dir == Vector2.down)
+        {
+            TurnOffAllAnimations();
+            downAnimation.SetActive(true);
+        }
+        
         // cast a ray only against walls
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 100f, LayerMask.GetMask("Wall"));
 
