@@ -21,13 +21,13 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         animationControllerScript = GetComponent<SetDirectionalAnimations>();
         if (!animationControllerScript)
             Debug.Log("In order to use animations on this, you need a SetDirectionalAnimations script", this);
+        grid = FixToGrid.GeneralGrid;
     }
     
     protected override void Awake()
     {
         base.Awake();
 
-        grid = FixToGrid.GeneralGrid;
         OnSwipeDirection += OnPlayerSwipe;
     }
     private void Update()
