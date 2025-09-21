@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : SingletonBehaviour<GameManager>
 {
     public Grid GeneralGrid;
+    public GameObject Reward;
     public float GetGridSize()
     {
         return GeneralGrid.cellSize.x;

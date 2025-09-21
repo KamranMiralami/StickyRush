@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 5296969936574074698}
   - component: {fileID: 6984493733974910966}
   - component: {fileID: 2471445341113624479}
+  - component: {fileID: 929817807137644891}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -283,6 +284,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1f1900ca2b6964bb25942919fbbf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 5000
+  isPlayerControlled: 1
   minSwipeDistance: 100
   movementSpeed: 20
 --- !u!114 &5296969936574074698
@@ -299,6 +305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upGameObject: {fileID: 1810723295312032984}
   downGameObject: {fileID: 499009035661232436}
+  leftGameObject: {fileID: 0}
+  rightGameObject: {fileID: 0}
 --- !u!50 &6984493733974910966
 Rigidbody2D:
   serializedVersion: 5
@@ -372,3 +380,34 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
+--- !u!114 &929817807137644891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7538974405240636146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 9
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 0
+      BranchSizes: 03000000
+    VectorActionSize: 03000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 0
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: My Behavior
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_DeterministicInference: 0
+  m_ObservableAttributeHandling: 0
