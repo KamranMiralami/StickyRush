@@ -6,17 +6,14 @@ using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
-public class PlayerManager :  Agent
+public class PlayerManager :  SingletonBehaviour<PlayerManager>
 {
-    public static PlayerManager Instance { get; protected set; }
     //Animations
     SetDirectionalAnimations animationControllerScript;
     
     public Action<Vector2> OnSwipeDirection;
-    [SerializeField] bool isPlayerControlled;
     [SerializeField] float minSwipeDistance = 10f;
     [SerializeField] float movementSpeed = 10f;
-    [SerializeField] float agentDecisionDelay = 1f;
     Vector2 startPos;
     Grid grid;
     bool isMoving = false;
@@ -28,10 +25,7 @@ public class PlayerManager :  Agent
     protected override void Awake()
     {
         base.Awake();
-        Instance = this;
         OnSwipeDirection += OnPlayerSwipe;
-        fixToGrid = GetComponent<FixToGrid>();
-        initialPosition = new Vector3(transform.position.x,transform.position.y, transform.position.z);
     }
     private void Start()
     {
@@ -40,10 +34,6 @@ public class PlayerManager :  Agent
             Debug.Log("In order to use animations on this, you need a SetDirectionalAnimations script", this);
         grid = FixToGrid.GeneralGrid;
         reward = GameManager.Instance.Reward;
-    }
-    public override void Heuristic(in ActionBuffers actionsOut)
-    {
-        if (!isPlayerControlled) return;
     }
     private Vector2 GetFuturePos(Vector2 dir)
     {
@@ -69,7 +59,6 @@ public class PlayerManager :  Agent
         Vector3 targetPos = GetFuturePos(dir);
         if (Vector3.Distance(targetPos, transform.position) < 0.1f)
         {
-            agentDecisionDelay = 0;
             return;
         }
         //Animations
@@ -84,30 +73,12 @@ public class PlayerManager :  Agent
                 StartCoroutine(GameManager.DoWithDelay(.5f, () =>
                 {
                     isMoving = false;
-                    agentDecisionDelay = 0;
                 }));
             });
     }
     private void Update()
     {
-        if (isPlayerControlled)
-        {
-            CheckSwipeLogic();
-        }
-        else
-        {
-            if(agentDecisionDelay > 0)
-                agentDecisionDelay -= Time.deltaTime;
-            else
-            {
-                if (moveTween == null || !moveTween.IsActive() || moveTween.IsComplete())
-                {
-                    Debug.Log("AI should do something now");
-                    RequestDecision();
-                    agentDecisionDelay = 5f;
-                }
-            }
-        }
+        CheckSwipeLogic();
     }
     private void CheckSwipeLogic()
     {
@@ -163,72 +134,6 @@ public class PlayerManager :  Agent
             transform.DOScale(Vector3.one * 1.2f, 0.1f).SetLoops(-1);
             collision.gameObject.SetActive(false);
             canMove = false;
-            if (!isPlayerControlled)
-            {
-                canMove = true;
-                transform.DOKill();
-                collision.gameObject.SetActive(true);
-                SetReward(1000f);
-                EndEpisode();
-            }
         }
-    }
-    Vector2 ParseActionToVector2(ActionSegment<int> actions)
-    {
-        int dir = actions[0]; // 0-left, 1-right, 2-up, 3-down
-        Vector2 move = Vector2.zero;
-        switch (dir)
-        {
-            case 0:
-                move = Vector2.left;
-                break;
-            case 1:
-                move = Vector2.right;
-                break;
-            case 2:
-                move = Vector2.up;
-                break;
-            case 3:
-                move = Vector2.down;
-                break;
-            default:
-                Debug.LogError("Invalid action");
-                break;
-        }
-        return move;
-    }
-    public override void OnActionReceived(ActionBuffers actionBuffers)
-    {
-        if (isPlayerControlled) return;
-        // Move the agent using the action.
-        var dir = ParseActionToVector2(actionBuffers.DiscreteActions);
-        Debug.Log("AI deciding on action : " + actionBuffers.DiscreteActions[0]);
-        OnSwipeDirection?.Invoke(dir);
-        // Penalty given each step to encourage agent to finish task quickly.
-        AddReward(-0.1f);
-    }
-    public override void OnEpisodeBegin()
-    {
-        if (isPlayerControlled) return;
-        Debug.Log("Begining Episode");
-        transform.position = initialPosition;
-        fixToGrid.SnapToGrid();
-    }
-    public override void CollectObservations(VectorSensor sensor)
-    {
-        var futureLeft = GetFuturePos(Vector2.left);
-        var futureRight = GetFuturePos(Vector2.right);
-        var futureUp = GetFuturePos(Vector2.up);
-        var futureDown = GetFuturePos(Vector2.down);
-        float dist = float.MaxValue;
-        if(reward != null)
-            dist = Vector3.Distance(transform.position, reward.transform.position);
-
-        sensor.AddObservation(futureLeft);
-        sensor.AddObservation(futureRight);
-        sensor.AddObservation(futureUp);
-        sensor.AddObservation(futureDown);
-        sensor.AddObservation(new Vector2(transform.position.x,transform.position.y));
-        sensor.AddObservation(dist);
     }
 }
