@@ -1,0 +1,508 @@
+fileFormatVersion: 2
+guid: 8113f02ce4d2b304aa1d9192254d0786
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4028745555362431759
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_0
+  - first:
+      213: 892524551488434606
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_1
+  - first:
+      213: 965867338373938750
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_2
+  - first:
+      213: 7778484930560352728
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_3
+  - first:
+      213: 4395194749917937992
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_4
+  - first:
+      213: 6944113916178897917
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_5
+  - first:
+      213: -3716702478581546001
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_6
+  - first:
+      213: 3561491851787584500
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_7
+  - first:
+      213: -3944172244207336841
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_8
+  - first:
+      213: 8128378397548550335
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_9
+  - first:
+      213: 1566374175145254576
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_10
+  - first:
+      213: 1177001944210457055
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_11
+  - first:
+      213: -59612188468314087
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_12
+  - first:
+      213: -7877059887250255361
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_13
+  - first:
+      213: 7221460546554671795
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_14
+  - first:
+      213: -8755949536915095149
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_15
+  - first:
+      213: -333484237153653275
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_16
+  - first:
+      213: -8321434088835764030
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_17
+  - first:
+      213: -524461736590155717
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_18
+  - first:
+      213: 8671771665799053500
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_19
+  - first:
+      213: 3344156057667962914
+    second: Brainiac_SpriteLEFT-ezgif.com-gif-to-sprite-converter_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f955de5f1737d27468c26432a086b16f
+      internalID: -940690234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a822beca9a7eec34bb882dac3ca08019
+      internalID: 1827232583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc89fcf183c83524a8bb33679b90be31
+      internalID: 1181683528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ead420b1657c7294e9c7cd585b681419
+      internalID: -1613207757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cdedee02ce107044b299c01c37c4667
+      internalID: 197073551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaedc4d65e92e1e4db3a6be2beea8f48
+      internalID: -104894647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 257b1527f00e9e64d88225b020940a95
+      internalID: 500895230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61fb1a1afd4770c43bcaaae7ac99c558
+      internalID: 1912828972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4929cd24dbd13f74b89a017751ce9654
+      internalID: -351613949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f17d659c5fae75428adbb059e74e578
+      internalID: 1293912187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_10
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33e8b88bd6580434a82883e040369ebe
+      internalID: -26954916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Brainiac_SpriteLEFT_11
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 904a97897424b144590df403e9144741
+      internalID: 1475134477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9e3dbc8376403b74ab9aa23ad20eb88a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Brainiac_SpriteLEFT_0: -940690234
+      Brainiac_SpriteLEFT_1: 1827232583
+      Brainiac_SpriteLEFT_10: -26954916
+      Brainiac_SpriteLEFT_11: 1475134477
+      Brainiac_SpriteLEFT_2: 1181683528
+      Brainiac_SpriteLEFT_3: -1613207757
+      Brainiac_SpriteLEFT_4: 197073551
+      Brainiac_SpriteLEFT_5: -104894647
+      Brainiac_SpriteLEFT_6: 500895230
+      Brainiac_SpriteLEFT_7: 1912828972
+      Brainiac_SpriteLEFT_8: -351613949
+      Brainiac_SpriteLEFT_9: 1293912187
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
