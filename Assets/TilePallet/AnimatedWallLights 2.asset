@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: AnimatedWallLights 2
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 6098751494144269038, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -960241248, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: 1972944007, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -657105727, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -909068206, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -1147648600, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -322558686, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -1028591509, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -652895681, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: 286028545, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -890240869, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: 1618908354, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: 1765598830, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: 2020300814, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -651939491, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -1021425508, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: 1834106180, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  - {fileID: -115484234, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
+  m_MinSpeed: 11
+  m_MaxSpeed: 11
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 1
+  m_TileAnimationFlags: 0
