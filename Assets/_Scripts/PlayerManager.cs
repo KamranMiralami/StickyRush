@@ -19,9 +19,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     bool isMoving = false;
     bool canMove = true;
     Tween moveTween;
-    FixToGrid fixToGrid;
-    Vector3 initialPosition;
-    GameObject reward;
+    Vector3 prevPos;
     protected override void Awake()
     {
         base.Awake();
@@ -33,7 +31,6 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
         if (!animationControllerScript)
             Debug.Log("In order to use animations on this, you need a SetDirectionalAnimations script", this);
         grid = FixToGrid.GeneralGrid;
-        reward = GameManager.Instance.Reward;
     }
     private Vector2 GetFuturePos(Vector2 dir)
     {
@@ -42,7 +39,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
         if (hit.collider != null)
         {
             // move to cell just before the wall
-            Vector3 stopPos = hit.point - dir * GameManager.Instance.GetGridSize() * 0.5f;
+            Vector3 stopPos = hit.point - 0.5f * GameManager.Instance.GetGridSize() * dir;
             Vector3Int cell = grid.WorldToCell(stopPos);
             //Debug.Log("Wall hit at " + hit.point + " " + GameManager.Instance.GetGridSize() + " " + stopPos + " " + hit.transform.gameObject.name);
             return grid.GetCellCenterWorld(cell);
@@ -65,6 +62,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
         if (animationControllerScript)
             animationControllerScript.SetDirection(dir);
         isMoving = true;
+        prevPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         moveTween = transform.DOMove(targetPos, movementSpeed)
             .SetEase(Ease.InSine)
             .SetSpeedBased(true)
@@ -134,6 +132,32 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             transform.DOScale(Vector3.one * 1.2f, 0.1f).SetLoops(-1);
             collision.gameObject.SetActive(false);
             canMove = false;
+            GameManager.Instance.GivePlayerReward(10);
+        }
+        if (collision.gameObject.CompareTag("TinyReward"))
+        {
+            Debug.Log("Collided with tiny reward");
+            collision.gameObject.SetActive(false);
+            GameManager.Instance.GivePlayerReward(1);
+        }
+        if (collision.gameObject.CompareTag("Spike"))
+        {
+            Debug.Log("Collided with spike");
+            if(collision.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
+            {
+                if (spike.IsOpen())
+                {
+                    collision.gameObject.SetActive(false);
+                    GameManager.Instance.GivePlayerReward(3);
+                }
+                else
+                {
+                    moveTween?.Kill(false);
+                    transform.position = prevPos;
+                    collision.gameObject.SetActive(false);
+                    isMoving = false;
+                }
+            }
         }
     }
 }

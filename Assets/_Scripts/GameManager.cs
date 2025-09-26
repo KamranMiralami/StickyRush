@@ -6,6 +6,21 @@ public class GameManager : SingletonBehaviour<GameManager>
 {
     public Grid GeneralGrid;
     public GameObject Reward;
+    public Action<int> OnScoreChanged;
+    public int Score
+    {
+        get { return _score; } 
+        private set 
+        { 
+            _score = value; 
+            OnScoreChanged?.Invoke(_score);
+        }
+    }
+    int _score;
+    public void GivePlayerReward(int val)
+    {
+        Score += val;
+    }
     public float GetGridSize()
     {
         return GeneralGrid.cellSize.x;

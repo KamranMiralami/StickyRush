@@ -3,6 +3,7 @@ using System;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AgentManager : Agent
@@ -18,6 +19,7 @@ public class AgentManager : Agent
     FixToGrid fixToGrid;
     Vector3 initialPosition;
     GameObject reward;
+    Vector3 prevPos;
     protected override void Awake()
     {
         base.Awake();
@@ -63,6 +65,7 @@ public class AgentManager : Agent
         //Animations
         if (animationControllerScript)
             animationControllerScript.SetDirection(dir);
+        prevPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         moveTween = transform.DOMove(targetPos, movementSpeed)
             .SetEase(Ease.InSine)
             .SetSpeedBased(true)
@@ -84,6 +87,7 @@ public class AgentManager : Agent
             {
                 //Debug.Log("AI should do something now");
                 RequestDecision();
+                SetReward(-10f);
                 agentDecisionDelay = 5f;
             }
         }
@@ -99,6 +103,32 @@ public class AgentManager : Agent
             transform.DOKill();
             SetReward(1000f);
             EndEpisode();
+        }
+        if (collision.gameObject.CompareTag("TinyReward"))
+        {
+            Debug.Log("Collided with tiny reward");
+            collision.gameObject.SetActive(false);
+            SetReward(100f);
+        }
+        if (collision.gameObject.CompareTag("Spike"))
+        {
+            Debug.Log("Collided with spike");
+            if (collision.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
+            {
+                if (spike.IsOpen())
+                {
+                    collision.gameObject.SetActive(false);
+                    SetReward(200f);
+                }
+                else
+                {
+                    moveTween?.Kill(false);
+                    transform.position = prevPos;
+                    collision.gameObject.SetActive(false);
+                    SetReward(-200f);
+                    moveTween = null;
+                }
+            }
         }
     }
     Vector2 ParseActionToVector2(ActionSegment<int> actions)
