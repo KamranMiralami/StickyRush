@@ -1576,11 +1576,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 310558403282734263, guid: 592e4cad0e9fd064d9ee7f492bc9fadd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.5
+      value: -7.5
       objectReference: {fileID: 0}
     - target: {fileID: 310558403282734263, guid: 592e4cad0e9fd064d9ee7f492bc9fadd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 310558403282734263, guid: 592e4cad0e9fd064d9ee7f492bc9fadd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1636,13 +1636,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 315396279}
     m_Modifications:
-    - target: {fileID: 1316374697348098639, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
-      propertyPath: snapOnEnable
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2523702919633038596, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.49
+      value: 12.5
       objectReference: {fileID: 0}
     - target: {fileID: 2523702919633038596, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1752,7 +1748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7538974405240636146, guid: 773b3b8f0d68d9740bc189dcff98fac1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
