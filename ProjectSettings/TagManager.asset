@@ -8,6 +8,7 @@ TagManager:
   - Reward
   - TinyReward
   - Spike
+  - AI Camera
   layers:
   - Default
   - TransparentFX
