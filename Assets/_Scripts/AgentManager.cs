@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -20,6 +21,7 @@ public class AgentManager : Agent
     Vector3 initialPosition;
     GameObject reward;
     Vector3 prevPos;
+    HashSet<Vector2> visitedLocations;
     protected override void Awake()
     {
         base.Awake();
@@ -167,6 +169,7 @@ public class AgentManager : Agent
     public override void OnEpisodeBegin()
     {
         Debug.Log("Begining Episode");
+        visitedLocations = new HashSet<Vector2>();
         transform.position = initialPosition;
         fixToGrid.SnapToGrid();
     }
@@ -179,12 +182,30 @@ public class AgentManager : Agent
         float dist = float.MaxValue;
         if (reward != null)
             dist = Vector3.Distance(transform.position, reward.transform.position);
-
+        Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
+        float numberOfNewOptions = 0;
+        if (visitedLocations.Contains(futureLeft))
+            numberOfNewOptions += 1;
+        if (visitedLocations.Contains(futureRight))
+            numberOfNewOptions += 1;
+        if (visitedLocations.Contains(futureUp))
+            numberOfNewOptions += 1;
+        if (visitedLocations.Contains(futureDown))
+            numberOfNewOptions += 1;
+        
         sensor.AddObservation(futureLeft);
         sensor.AddObservation(futureRight);
         sensor.AddObservation(futureUp);
         sensor.AddObservation(futureDown);
-        sensor.AddObservation(new Vector2(transform.position.x, transform.position.y));
+        sensor.AddObservation(currentPos);
         sensor.AddObservation(dist);
+        if (visitedLocations.Contains(currentPos))
+            sensor.AddObservation(true);
+        else
+        {
+            sensor.AddObservation(false);
+            visitedLocations.Add(currentPos);
+        }
+        sensor.AddObservation(numberOfNewOptions);
     }
 }
