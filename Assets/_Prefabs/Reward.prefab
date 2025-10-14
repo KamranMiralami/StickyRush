@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9209285240777179552}
   - component: {fileID: 4866269569742245070}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hexagon Flat Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 3001967507452335685}
   - component: {fileID: 5305890138138121340}
   - component: {fileID: 8840916517351690660}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Reward
   m_TagString: Reward
   m_Icon: {fileID: 0}

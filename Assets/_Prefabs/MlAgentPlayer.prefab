@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7111993960886904092}
   - component: {fileID: 4198022115566285764}
   - component: {fileID: 5210164348312338190}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MlAgentPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -71,6 +71,9 @@ MonoBehaviour:
   MaxStep: 10000
   movementSpeed: 20
   agentDecisionDelay: 1
+  notPlayerMask:
+    serializedVersion: 2
+    m_Bits: 3264
 --- !u!114 &4396235951937681459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,7 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upGameObject: {fileID: 8385172586197707717}
   downGameObject: {fileID: 7643652170214042227}
-  leftGameObject: {fileID: 0}
+  leftGameObject: {fileID: 8879485127713929329}
   rightGameObject: {fileID: 0}
 --- !u!50 &7111993960886904092
 Rigidbody2D:
@@ -173,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 12
+    VectorObservationSize: 21
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -202,7 +205,7 @@ GameObject:
   - component: {fileID: 1292884306191553938}
   - component: {fileID: 6481999238854886729}
   - component: {fileID: 7664570462145973222}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Render_down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,7 +315,7 @@ GameObject:
   - component: {fileID: 9141707718655941690}
   - component: {fileID: 4487268731916142957}
   - component: {fileID: 661005352986251022}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Render_up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +425,7 @@ GameObject:
   - component: {fileID: 7052324162717781275}
   - component: {fileID: 2739524944908753133}
   - component: {fileID: 3226839695267304268}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Render_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

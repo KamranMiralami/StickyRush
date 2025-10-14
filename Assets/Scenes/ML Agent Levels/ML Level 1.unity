@@ -357,11 +357,6 @@ Transform:
   - {fileID: 3280646488420704082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &446876193 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8879485127713929329, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
-  m_PrefabInstance: {fileID: 3636429676453588438}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &454053081
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,10 +2418,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 315396279}
     m_Modifications:
-    - target: {fileID: 1316374697348098639, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
-      propertyPath: snapOnEnable
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2523702919633038596, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.49
@@ -2468,20 +2459,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4396235951937681459, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
-      propertyPath: leftGameObject
-      value: 
-      objectReference: {fileID: 446876193}
-    - target: {fileID: 4396235951937681459, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
       propertyPath: rightGameObject
       value: 
       objectReference: {fileID: 292750588}
     - target: {fileID: 4458714604170969574, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
       propertyPath: m_Name
       value: MlAgentPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 4458714604170969574, guid: d14c3353eb91d494e89079f594a5a47c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

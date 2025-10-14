@@ -22,6 +22,8 @@ public class AgentManager : Agent
     GameObject reward;
     Vector3 prevPos;
     HashSet<Vector2> visitedLocations;
+    [SerializeField] LayerMask notPlayerMask;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -183,6 +185,7 @@ public class AgentManager : Agent
         if (reward != null)
             dist = Vector3.Distance(transform.position, reward.transform.position);
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
+        
         float numberOfNewOptions = 0;
         if (visitedLocations.Contains(futureLeft))
             numberOfNewOptions += 1;
@@ -193,12 +196,26 @@ public class AgentManager : Agent
         if (visitedLocations.Contains(futureDown))
             numberOfNewOptions += 1;
         
+        
+        //Positions (11)
         sensor.AddObservation(futureLeft);
         sensor.AddObservation(futureRight);
         sensor.AddObservation(futureUp);
         sensor.AddObservation(futureDown);
         sensor.AddObservation(currentPos);
         sensor.AddObservation(dist);
+        
+        //Safety (4)
+        sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.left));
+        sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.right));
+        sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.up));
+        sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.down));
+        
+        //Already visited (5)
+        sensor.AddObservation(visitedLocations.Contains(futureLeft));
+        sensor.AddObservation(visitedLocations.Contains(futureRight));
+        sensor.AddObservation(visitedLocations.Contains(futureUp));
+        sensor.AddObservation(visitedLocations.Contains(futureDown));
         if (visitedLocations.Contains(currentPos))
             sensor.AddObservation(true);
         else
@@ -206,6 +223,28 @@ public class AgentManager : Agent
             sensor.AddObservation(false);
             visitedLocations.Add(currentPos);
         }
+        
+        // New options from here (1)
         sensor.AddObservation(numberOfNewOptions);
+    }
+
+    int CheckSafetyValue(Vector2 currentPos, Vector2 dir)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(currentPos, dir, 9999999, notPlayerMask);
+        
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Reward"))
+            return 10;
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TinyReward"))
+            return 5;
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Trap") && hit.collider.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
+            if (spike.IsOpen())
+                return 1;
+            else
+                return -50;
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
+            return 0;
+        
+        Debug.Log("Collision check for safety is wrong or missing values");
+        return 0;
     }
 }
