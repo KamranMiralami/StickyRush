@@ -133,7 +133,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             collision.gameObject.SetActive(false);
             canMove = false;
             GameManager.Instance.GivePlayerReward(10);
-            GameManager.Instance.FinishLevel();
+            GameManager.Instance.FinishLevel(true);
         }
         if (collision.gameObject.CompareTag("TinyReward"))
         {

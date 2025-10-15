@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AgentManager : Agent
@@ -23,6 +22,8 @@ public class AgentManager : Agent
     Vector3 prevPos;
     HashSet<Vector2> visitedLocations;
     [SerializeField] LayerMask notPlayerMask;
+
+    bool canMove = true;
     
     protected override void Awake()
     {
@@ -83,6 +84,8 @@ public class AgentManager : Agent
     }
     private void Update()
     {
+        if(!canMove)
+            return;
         if (agentDecisionDelay > 0)
             agentDecisionDelay -= Time.deltaTime;
         else
@@ -107,6 +110,8 @@ public class AgentManager : Agent
             transform.DOKill();
             SetReward(1000f);
             EndEpisode();
+            canMove = false;
+            GameManager.Instance.FinishLevel(false);
         }
         if (collision.gameObject.CompareTag("TinyReward"))
         {
@@ -174,6 +179,7 @@ public class AgentManager : Agent
         visitedLocations = new HashSet<Vector2>();
         transform.position = initialPosition;
         fixToGrid.SnapToGrid();
+        canMove = true;
     }
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -233,14 +239,14 @@ public class AgentManager : Agent
         RaycastHit2D hit = Physics2D.Raycast(currentPos, dir, 9999999, notPlayerMask);
         
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Reward"))
-            return 10;
+            return 100;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TinyReward"))
-            return 5;
+            return 10;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Trap") && hit.collider.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
             if (spike.IsOpen())
                 return 1;
             else
-                return -50;
+                return -10;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
             return 0;
         

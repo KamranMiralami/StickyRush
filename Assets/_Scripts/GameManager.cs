@@ -31,7 +31,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
-    public void FinishLevel()
+    public void FinishLevel(bool playerWon)
     {
         form.SetActive(true);
     }
