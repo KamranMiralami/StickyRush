@@ -7,6 +7,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public Grid GeneralGrid;
     public GameObject Reward;
     public Action<int> OnScoreChanged;
+    [SerializeField] GameObject form;
     public int Score
     {
         get { return _score; } 
@@ -29,5 +30,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         yield return new WaitForSeconds(delay);
         action?.Invoke();
+    }
+    public void FinishLevel()
+    {
+        form.SetActive(true);
     }
 }
