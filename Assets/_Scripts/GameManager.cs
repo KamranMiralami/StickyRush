@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : SingletonBehaviour<GameManager>
@@ -8,6 +9,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public GameObject Reward;
     public Action<int> OnScoreChanged;
     [SerializeField] GameObject form;
+    [SerializeField] TextMeshProUGUI scoreText;
     public int Score
     {
         get { return _score; } 
@@ -21,6 +23,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void GivePlayerReward(int val)
     {
         Score += val;
+        if (scoreText)
+            scoreText.text = Score.ToString();
     }
     public float GetGridSize()
     {
