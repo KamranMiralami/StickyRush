@@ -12,6 +12,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     [SerializeField] GameObject form;
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] CinemachineImpulseSource impulseSource;
+    [SerializeField] GameObject effectObject;
     public int Score
     {
         get { return _score; } 
@@ -47,6 +48,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     private IEnumerator OpenForm()
     {
         yield return new WaitForSeconds(0.7f);
+        if (effectObject)
+            effectObject.SetActive(true);
         form.SetActive(true);
     }
 }
