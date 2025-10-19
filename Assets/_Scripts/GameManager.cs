@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class GameManager : SingletonBehaviour<GameManager>
@@ -10,6 +11,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public Action<int> OnScoreChanged;
     [SerializeField] GameObject form;
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] CinemachineImpulseSource impulseSource;
     public int Score
     {
         get { return _score; } 
@@ -37,6 +39,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void FinishLevel(bool playerWon)
     {
+        if (impulseSource)
+            impulseSource.GenerateImpulseWithForce(0.7f);
+        StartCoroutine(OpenForm());
+    }
+
+    private IEnumerator OpenForm()
+    {
+        yield return new WaitForSeconds(0.7f);
         form.SetActive(true);
     }
 }
