@@ -33,6 +33,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void FinishLevel(bool playerWon)
     {
-        form.SetActive(true);
+        if(form !=null) 
+            form.SetActive(true);
     }
 }

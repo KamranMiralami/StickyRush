@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1760807290",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\kamra\\miniconda3\\envs\\mlagents\\Scripts\\mlagents-learn config.yaml --run-id=Run1 --resume",
+        "mlagents_version": "1.1.0",
+        "mlagents_envs_version": "1.1.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.8.0+cu128",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1760807352"
+    },
+    "total": 62.42171789999975,
+    "count": 1,
+    "self": 0.007710500000030152,
+    "children": {
+        "run_training.setup": {
+            "total": 0.05770409999968251,
+            "count": 1,
+            "self": 0.05770409999968251
+        },
+        "TrainerController.start_learning": {
+            "total": 62.356303300000036,
+            "count": 1,
+            "self": 8.059999981924193e-05,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 62.35620199999994,
+                    "count": 1,
+                    "self": 62.35620199999994
+                },
+                "TrainerController._save_models": {
+                    "total": 2.0700000277429353e-05,
+                    "count": 1,
+                    "self": 2.0700000277429353e-05
+                }
+            }
+        }
+    }
+}

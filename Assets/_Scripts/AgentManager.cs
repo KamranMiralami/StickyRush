@@ -24,10 +24,11 @@ public class AgentManager : Agent
     [SerializeField] LayerMask notPlayerMask;
 
     bool canMove = true;
-    
+    List<GameObject> collectedRewards;
     protected override void Awake()
     {
         base.Awake();
+        collectedRewards = new();
         OnSwipeDirection += OnPlayerSwipe;
         fixToGrid = GetComponent<FixToGrid>();
         initialPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
@@ -94,7 +95,6 @@ public class AgentManager : Agent
             {
                 //Debug.Log("AI should do something now");
                 RequestDecision();
-                SetReward(-10f);
                 agentDecisionDelay = 5f;
             }
         }
@@ -108,16 +108,18 @@ public class AgentManager : Agent
             transform.position = collision.transform.position;
             transform.DOScale(Vector3.one * 1.2f, 0.1f).SetLoops(-1);
             transform.DOKill();
-            SetReward(1000f);
+            AddReward(10000f);
             EndEpisode();
             canMove = false;
+            Debug.Log("AI finished level");
             GameManager.Instance.FinishLevel(false);
         }
         if (collision.gameObject.CompareTag("TinyReward"))
         {
             Debug.Log("Collided with tiny reward");
             collision.gameObject.SetActive(false);
-            SetReward(100f);
+            collectedRewards.Add(collision.gameObject);
+            AddReward(100f);
         }
         if (collision.gameObject.CompareTag("Spike"))
         {
@@ -127,16 +129,17 @@ public class AgentManager : Agent
                 if (spike.IsOpen())
                 {
                     collision.gameObject.SetActive(false);
-                    SetReward(200f);
+                    AddReward(200f);
                 }
                 else
                 {
                     moveTween?.Kill(false);
                     transform.position = prevPos;
                     collision.gameObject.SetActive(false);
-                    SetReward(-200f);
+                    AddReward(-200f);
                     moveTween = null;
                 }
+                collectedRewards.Add(collision.gameObject);
             }
         }
     }
@@ -168,10 +171,10 @@ public class AgentManager : Agent
     {
         // Move the agent using the action.
         var dir = ParseActionToVector2(actionBuffers.DiscreteActions);
-        //Debug.Log("AI deciding on action : " + actionBuffers.DiscreteActions[0]);
+        Debug.Log("AI deciding on action : " + dir);
         OnSwipeDirection?.Invoke(dir);
         // Penalty given each step to encourage agent to finish task quickly.
-        AddReward(-0.1f);
+        AddReward(-1f);
     }
     public override void OnEpisodeBegin()
     {
@@ -180,6 +183,10 @@ public class AgentManager : Agent
         transform.position = initialPosition;
         fixToGrid.SnapToGrid();
         canMove = true;
+        foreach(var obj in collectedRewards)
+        {
+            obj.SetActive(true);
+        }
     }
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -187,10 +194,7 @@ public class AgentManager : Agent
         var futureRight = GetFuturePos(Vector2.right);
         var futureUp = GetFuturePos(Vector2.up);
         var futureDown = GetFuturePos(Vector2.down);
-        float dist = float.MaxValue;
-        if (reward != null)
-            dist = Vector3.Distance(transform.position, reward.transform.position);
-        Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
+        Vector2 currentPos = new(transform.position.x, transform.position.y);
         
         float numberOfNewOptions = 0;
         if (visitedLocations.Contains(futureLeft))
@@ -201,21 +205,20 @@ public class AgentManager : Agent
             numberOfNewOptions += 1;
         if (visitedLocations.Contains(futureDown))
             numberOfNewOptions += 1;
-        
-        
-        //Positions (11)
-        sensor.AddObservation(futureLeft);
-        sensor.AddObservation(futureRight);
-        sensor.AddObservation(futureUp);
-        sensor.AddObservation(futureDown);
-        sensor.AddObservation(currentPos);
-        sensor.AddObservation(dist);
-        
+
         //Safety (4)
         sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.left));
         sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.right));
         sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.up));
         sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.down));
+
+        //Positions (6 * 3)
+        sensor.AddObservation(futureLeft);
+        sensor.AddObservation(futureRight);
+        sensor.AddObservation(futureUp);
+        sensor.AddObservation(futureDown);
+        sensor.AddObservation(currentPos);
+        sensor.AddObservation(reward.transform.position);
         
         //Already visited (5)
         sensor.AddObservation(visitedLocations.Contains(futureLeft));
@@ -229,28 +232,26 @@ public class AgentManager : Agent
             sensor.AddObservation(false);
             visitedLocations.Add(currentPos);
         }
-        
-        // New options from here (1)
-        sensor.AddObservation(numberOfNewOptions);
     }
 
     int CheckSafetyValue(Vector2 currentPos, Vector2 dir)
     {
-        RaycastHit2D hit = Physics2D.Raycast(currentPos, dir, 9999999, notPlayerMask);
-        
+        RaycastHit2D hit = Physics2D.Raycast(currentPos, dir, 1000, notPlayerMask);
+        if (hit.transform == null)
+        {
+            return 0;
+        }
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Reward"))
             return 100;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TinyReward"))
             return 10;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Trap") && hit.collider.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
             if (spike.IsOpen())
-                return 1;
+                return 10;
             else
                 return -10;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
             return 0;
-        
-        Debug.Log("Collision check for safety is wrong or missing values");
         return 0;
     }
 }
