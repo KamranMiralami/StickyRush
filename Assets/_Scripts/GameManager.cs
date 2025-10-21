@@ -31,8 +31,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
+
+    
     public void FinishLevel()
     {
-        form.SetActive(true);
+        StartCoroutine(DoWithDelay(2f, () => form.SetActive(true)));
     }
 }
