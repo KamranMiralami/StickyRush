@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class GameManager : SingletonBehaviour<GameManager>
@@ -8,6 +10,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     public GameObject Reward;
     public Action<int> OnScoreChanged;
     [SerializeField] GameObject form;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] CinemachineImpulseSource impulseSource;
+    [SerializeField] GameObject effectObject;
     public int Score
     {
         get { return _score; } 
@@ -21,6 +26,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void GivePlayerReward(int val)
     {
         Score += val;
+        if (scoreText)
+            scoreText.text = Score.ToString();
     }
     public float GetGridSize()
     {
@@ -35,5 +42,16 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         if(form !=null) 
             form.SetActive(true);
+        if (impulseSource)
+            impulseSource.GenerateImpulseWithForce(0.7f);
+        StartCoroutine(OpenForm());
+    }
+
+    private IEnumerator OpenForm()
+    {
+        yield return new WaitForSeconds(0.7f);
+        if (effectObject)
+            effectObject.SetActive(true);
+        form.SetActive(true);
     }
 }
