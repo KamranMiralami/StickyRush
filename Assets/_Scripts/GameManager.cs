@@ -8,7 +8,6 @@ using UnityEngine;
 public class GameManager : SingletonBehaviour<GameManager>
 {
     public Grid GeneralGrid;
-    public GameObject Reward;
     public Action<int> OnScoreChanged;
     [SerializeField] GameObject form;
     [SerializeField] TextMeshProUGUI scoreText;
@@ -89,6 +88,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void FinishLevel(bool playerWon)
     {
+        return;
         if(form !=null) 
             form.SetActive(true);
         if (impulseSource)
