@@ -14,6 +14,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     public Action<Vector2> OnSwipeDirection;
     [SerializeField] float minSwipeDistance = 10f;
     [SerializeField] float movementSpeed = 10f;
+    [SerializeField]GameObject pickUpEffect;
     Vector2 startPos;
     Grid grid;
     bool isMoving = false;
@@ -141,12 +142,15 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        var PickupAnimator = pickUpEffect.GetComponent<Animator>();
+        var PickupRenderer = pickUpEffect.GetComponent<SpriteRenderer>();
         if (collision.gameObject.CompareTag("Reward"))
         {
             Debug.Log("Collided with reward");
             moveTween?.Kill(false);
             transform.position = collision.transform.position;
-            transform.DOScale(Vector3.one * 1.2f, 0.1f).SetLoops(-1);
+           
+            //transform.DOScale(Vector3.one * 1.2f, 0.1f).SetLoops(-1);
             collision.gameObject.SetActive(false);
             canMove = false;
             GameManager.Instance.GivePlayerReward(10);
@@ -156,6 +160,10 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
         {
             Debug.Log("Collided with tiny reward");
             collision.gameObject.SetActive(false);
+            pickUpEffect.transform.position = collision.transform.position;
+            PickupAnimator.enabled = true;
+            PickupRenderer.enabled = true;
+            PickupAnimator.Play("Got_tiny_reward");
             GameManager.Instance.GivePlayerReward(1);
         }
         if (collision.gameObject.CompareTag("Spike"))
