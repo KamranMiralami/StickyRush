@@ -7,6 +7,8 @@ public class UIController : MonoBehaviour
 
     public void BackToLevelSelect()
     {
+        GameManager.Instance.currentLevelResults.playerQuit = true;
+        GameManager.Instance.SendTelementry();
         SceneManager.LoadScene("LevelSelect");
     }
 
