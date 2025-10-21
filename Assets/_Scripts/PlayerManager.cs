@@ -121,6 +121,23 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            OnSwipeDirection?.Invoke(Vector2.up);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            OnSwipeDirection?.Invoke(Vector2.down);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            OnSwipeDirection?.Invoke(Vector2.left);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            OnSwipeDirection?.Invoke(Vector2.right);
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

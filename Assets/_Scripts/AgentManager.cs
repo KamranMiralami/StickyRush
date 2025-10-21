@@ -116,14 +116,14 @@ public class AgentManager : Agent
         }
         if (collision.gameObject.CompareTag("TinyReward"))
         {
-            Debug.Log("Collided with tiny reward");
+            //Debug.Log("Collided with tiny reward");
             collision.gameObject.SetActive(false);
             collectedRewards.Add(collision.gameObject);
             AddReward(100f);
         }
         if (collision.gameObject.CompareTag("Spike"))
         {
-            Debug.Log("Collided with spike");
+            //Debug.Log("Collided with spike");
             if (collision.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
             {
                 if (spike.IsOpen())
@@ -171,14 +171,14 @@ public class AgentManager : Agent
     {
         // Move the agent using the action.
         var dir = ParseActionToVector2(actionBuffers.DiscreteActions);
-        Debug.Log("AI deciding on action : " + dir);
+        //Debug.Log("AI deciding on action : " + dir);
         OnSwipeDirection?.Invoke(dir);
         // Penalty given each step to encourage agent to finish task quickly.
         AddReward(-1f);
     }
     public override void OnEpisodeBegin()
     {
-        Debug.Log("Begining Episode");
+        //Debug.Log("Begining Episode");
         visitedLocations = new HashSet<Vector2>();
         transform.position = initialPosition;
         fixToGrid.SnapToGrid();

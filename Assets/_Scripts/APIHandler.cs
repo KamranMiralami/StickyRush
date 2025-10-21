@@ -6,25 +6,24 @@ using System.Text;
 public class LevelResults
 {
     public int final_score;
-    public int rewards;
+    public int tinyRewards;
     public float time;
     public int spikes_removed;
-    public float pause_time;
+    public bool playerQuit;
     public int moves;
     public bool win;
     public bool isMlAgent;
     public int Q1;
     public int Q2;
     public int Q3;
-
-    public LevelResults(int final_score, int rewards, float time, int spikes_removed, 
-        float pause_time, int moves, bool win, bool isMlAgent, int Q1, int Q2, int Q3)
+    public LevelResults(int final_score, int tinyRewards, float time, int spikes_removed, 
+        bool playerQuit, int moves, bool win, bool isMlAgent, int Q1, int Q2, int Q3)
     {
         this.final_score = final_score;
-        this.rewards = rewards;
+        this.tinyRewards = tinyRewards;
         this.time = time;
         this.spikes_removed = spikes_removed;
-        this.pause_time = pause_time;
+        this.playerQuit = playerQuit;
         this.moves = moves;
         this.win = win;
         this.isMlAgent = isMlAgent;
@@ -45,10 +44,10 @@ public class APIHandler : SingletonBehaviour<APIHandler>
     {
         LevelResults test = new(
             final_score : 66,
-            rewards : 17,
+            tinyRewards : 17,
             time : 356.7f,
             spikes_removed : 3,
-            pause_time : 24.2f,
+            playerQuit : true,
             moves : 812,
             win : true,
             isMlAgent : false,
@@ -57,6 +56,10 @@ public class APIHandler : SingletonBehaviour<APIHandler>
             Q3 : 3
             );
         StartCoroutine(SendLevelResults(test));
+    }
+    public void SendData(LevelResults payload)
+    {
+        StartCoroutine(SendLevelResults(payload));
     }
     IEnumerator SendLevelResults(LevelResults payload)
     {
