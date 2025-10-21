@@ -18,10 +18,11 @@ public class AgentManager : Agent
     Tween moveTween;
     FixToGrid fixToGrid;
     Vector3 initialPosition;
-    GameObject reward;
     Vector3 prevPos;
     HashSet<Vector2> visitedLocations;
     [SerializeField] LayerMask notPlayerMask;
+    [SerializeField] bool isRandom;
+    [SerializeField] GameObject reward;
 
     bool canMove = true;
     List<GameObject> collectedRewards;
@@ -39,7 +40,6 @@ public class AgentManager : Agent
         if (!animationControllerScript)
             Debug.Log("In order to use animations on this, you need a SetDirectionalAnimations script", this);
         grid = FixToGrid.GeneralGrid;
-        reward = GameManager.Instance.Reward;
     }
     private Vector2 GetFuturePos(Vector2 dir)
     {
@@ -94,7 +94,31 @@ public class AgentManager : Agent
             if (moveTween == null || !moveTween.IsActive() || moveTween.IsComplete())
             {
                 //Debug.Log("AI should do something now");
-                RequestDecision();
+                if (isRandom)
+                {
+                    int random = UnityEngine.Random.Range(0, 4);
+                    Vector2 dir = Vector2.zero;
+                    switch (random)
+                    {
+                        case 0:
+                            dir = Vector2.left;
+                            break;
+                        case 1:
+                            dir = Vector2.right;
+                            break;
+                        case 2:
+                            dir = Vector2.up;
+                            break;
+                        case 3:
+                            dir = Vector2.down;
+                            break;
+                    }
+                    OnPlayerSwipe(dir);
+                }
+                else
+                {
+                    RequestDecision();
+                }
                 agentDecisionDelay = 5f;
             }
         }
