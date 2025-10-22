@@ -214,12 +214,18 @@ public class AgentManager : Agent
     }
     public override void CollectObservations(VectorSensor sensor)
     {
+        var parentT = (Vector2)transform.parent.transform.position;
         var futureLeft = GetFuturePos(Vector2.left);
         var futureRight = GetFuturePos(Vector2.right);
         var futureUp = GetFuturePos(Vector2.up);
         var futureDown = GetFuturePos(Vector2.down);
+        futureDown -= parentT;
+        futureUp -= parentT;
+        futureRight -= parentT;
+        futureLeft -= parentT;
         Vector2 currentPos = new(transform.position.x, transform.position.y);
-        
+        currentPos -= parentT;
+
         float numberOfNewOptions = 0;
         if (visitedLocations.Contains(futureLeft))
             numberOfNewOptions += 1;
@@ -242,7 +248,7 @@ public class AgentManager : Agent
         sensor.AddObservation(futureUp);
         sensor.AddObservation(futureDown);
         sensor.AddObservation(currentPos);
-        sensor.AddObservation(reward.transform.position);
+        sensor.AddObservation((Vector2)reward.transform.position - parentT);
         
         //Already visited (5)
         sensor.AddObservation(visitedLocations.Contains(futureLeft));
