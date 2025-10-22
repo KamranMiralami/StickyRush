@@ -23,7 +23,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void OnEnable()
     {
         base.Awake();
-        currentLevelResults = new(0,0,0,0,false,0,false,false,0,0,0);
+        currentLevelResults = new(0,0,0,0,false,0,false,false,0,0,0,1);
         countTime = true;
         PlayerMadeAMove += OnPlayerMoved;
         OnTinyReward += OnTinyRewardRecieved;
@@ -93,7 +93,9 @@ public class GameManager : SingletonBehaviour<GameManager>
         if (impulseSource)
             impulseSource.GenerateImpulseWithForce(0.7f);
         currentLevelResults.win = playerWon;
-        currentLevelResults.isMlAgent = true;
+        var agent = FindFirstObjectByType<AgentManager>();
+        currentLevelResults.isMlAgent = !agent.isRandom;
+        currentLevelResults.levelNumber = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex-1;
         currentLevelResults.time = startTime;
         currentLevelResults.final_score = Score;
         StartCoroutine(OpenForm());

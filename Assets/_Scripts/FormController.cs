@@ -7,11 +7,11 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class FormController : MonoBehaviour
 {
-    [SerializeField] GameObject inputField1;
+    [SerializeField] TMP_InputField inputField1;
     [SerializeField] GameObject formObject1;
-    [SerializeField] GameObject inputField2;
+    [SerializeField] TMP_InputField inputField2;
     [SerializeField] GameObject formObject2;
-    [SerializeField] GameObject inputField3;
+    [SerializeField] TMP_InputField inputField3;
     [SerializeField] GameObject formObject3;
     [SerializeField] float waitTimeOnEffect;
     void Awake()
@@ -29,9 +29,9 @@ public class FormController : MonoBehaviour
     
     public void SubmitForm()
     {
-        string text1 = inputField1.GetComponent<TextMeshProUGUI>().text;
-        string text2 = inputField2.GetComponent<TextMeshProUGUI>().text;
-        string text3 = inputField3.GetComponent<TextMeshProUGUI>().text;
+        string text1 = inputField1.text;
+        string text2 = inputField2.text;
+        string text3 = inputField3.text;
         if (int.TryParse(text1, out int number1))
         {
             GameManager.Instance.currentLevelResults.Q1 = number1;

@@ -16,8 +16,9 @@ public class LevelResults
     public int Q1;
     public int Q2;
     public int Q3;
+    public int levelNumber;
     public LevelResults(int final_score, int tinyRewards, float time, int spikes_removed, 
-        bool playerQuit, int moves, bool win, bool isMlAgent, int Q1, int Q2, int Q3)
+        bool playerQuit, int moves, bool win, bool isMlAgent, int Q1, int Q2, int Q3, int levelNumber)
     {
         this.final_score = final_score;
         this.tinyRewards = tinyRewards;
@@ -30,6 +31,7 @@ public class LevelResults
         this.Q1 = Q1;
         this.Q2 = Q2;
         this.Q3 = Q3;
+        this.levelNumber = levelNumber;
     }
 }
 public class APIHandler : SingletonBehaviour<APIHandler>
@@ -53,7 +55,8 @@ public class APIHandler : SingletonBehaviour<APIHandler>
             isMlAgent : false,
             Q1 : 4,
             Q2 : 5,
-            Q3 : 3
+            Q3 : 3,
+            levelNumber : 2
             );
         StartCoroutine(SendLevelResults(test));
     }

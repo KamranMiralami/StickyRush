@@ -21,7 +21,7 @@ public class AgentManager : Agent
     Vector3 prevPos;
     HashSet<Vector2> visitedLocations;
     [SerializeField] LayerMask notPlayerMask;
-    [SerializeField] bool isRandom;
+    [SerializeField] public bool isRandom;
     [SerializeField] GameObject reward;
 
     bool canMove = true;

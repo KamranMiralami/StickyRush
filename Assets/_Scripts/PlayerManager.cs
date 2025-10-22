@@ -65,6 +65,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             animationControllerScript.SetDirection(dir);
         isMoving = true;
         prevPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        GameManager.Instance.PlayerMadeAMove?.Invoke();
         moveTween = transform.DOMove(targetPos, movementSpeed)
             .SetEase(Ease.InSine)
             .SetSpeedBased(true)
@@ -163,6 +164,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             Debug.Log("Collided with tiny reward");
             animator.SetTrigger("PickUpReward");
             Destroy(collision.gameObject, 1f);
+            GameManager.Instance.OnTinyReward?.Invoke();
             GameManager.Instance.GivePlayerReward(1);
         }
         if (collision.gameObject.CompareTag("Spike"))
@@ -174,12 +176,14 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
                 if (spike.IsOpen())
                 {
                     collision.gameObject.SetActive(false);
+                    GameManager.Instance.OnHitSpike?.Invoke(true);
                     GameManager.Instance.GivePlayerReward(3);
                 }
                 else
                 {
                     moveTween?.Kill(false);
                     transform.position = levelStartPos;
+                    GameManager.Instance.OnHitSpike?.Invoke(false);
                     GameManager.Instance.GivePlayerReward(-3);
                     isMoving = false;
                 }

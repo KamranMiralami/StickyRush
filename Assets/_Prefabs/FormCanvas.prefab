@@ -1288,12 +1288,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b869f6475d3ba264d9fd74eccb705191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField1: {fileID: 1732434112917880440}
-  formObject1: {fileID: 2951111297832943456}
-  inputField2: {fileID: 1178297877938023113}
-  formObject2: {fileID: 3958756827308813642}
-  inputField3: {fileID: 107829533191273563}
-  formObject3: {fileID: 6939629386401690456}
+  inputField1: {fileID: 1282733433991652459}
+  formObject1: {fileID: 1732434112917880440}
+  inputField2: {fileID: 9043869267065719708}
+  formObject2: {fileID: 1178297877938023113}
+  inputField3: {fileID: 3140269943790614343}
+  formObject3: {fileID: 107829533191273563}
   waitTimeOnEffect: 1
 --- !u!1 &3958756827308813642
 GameObject:
