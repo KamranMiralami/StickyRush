@@ -88,7 +88,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void FinishLevel(bool playerWon)
     {
-        return;
         if(form !=null) 
             form.SetActive(true);
         if (impulseSource)

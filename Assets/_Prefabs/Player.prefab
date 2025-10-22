@@ -524,7 +524,7 @@ MonoBehaviour:
   upGameObject: {fileID: 1810723295312032984}
   downGameObject: {fileID: 499009035661232436}
   leftGameObject: {fileID: 6849549042657830005}
-  rightGameObject: {fileID: 0}
+  rightGameObject: {fileID: 889934675716810243}
 --- !u!50 &6984493733974910966
 Rigidbody2D:
   serializedVersion: 5

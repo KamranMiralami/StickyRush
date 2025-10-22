@@ -96,7 +96,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170657880327332664}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f00a3b22262c6ff46adebab24e72d81f, type: 2}
   m_CullingMode: 0
@@ -245,4 +245,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3977147980164884373}
-  stateTime: 1
+  stateTime: 2

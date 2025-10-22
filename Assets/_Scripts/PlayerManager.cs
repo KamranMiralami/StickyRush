@@ -14,7 +14,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     public Action<Vector2> OnSwipeDirection;
     [SerializeField] float minSwipeDistance = 10f;
     [SerializeField] float movementSpeed = 10f;
-    [SerializeField]GameObject pickUpEffect;
+    Vector2 levelStartPos;
     Vector2 startPos;
     Grid grid;
     bool isMoving = false;
@@ -28,6 +28,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     }
     private void Start()
     {
+        levelStartPos = transform.position;
         animationControllerScript = GetComponent<SetDirectionalAnimations>();
         if (!animationControllerScript)
             Debug.Log("In order to use animations on this, you need a SetDirectionalAnimations script", this);
@@ -142,8 +143,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var PickupAnimator = pickUpEffect.GetComponent<Animator>();
-        var PickupRenderer = pickUpEffect.GetComponent<SpriteRenderer>();
+        
         if (collision.gameObject.CompareTag("Reward"))
         {
             Debug.Log("Collided with reward");
@@ -158,12 +158,11 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
         }
         if (collision.gameObject.CompareTag("TinyReward"))
         {
+            var animator = collision.GetComponentInChildren<Animator>();
+            
             Debug.Log("Collided with tiny reward");
-            collision.gameObject.SetActive(false);
-            pickUpEffect.transform.position = collision.transform.position;
-            PickupAnimator.enabled = true;
-            PickupRenderer.enabled = true;
-            PickupAnimator.Play("Got_tiny_reward");
+            animator.SetTrigger("PickUpReward");
+            Destroy(collision.gameObject, 1f);
             GameManager.Instance.GivePlayerReward(1);
         }
         if (collision.gameObject.CompareTag("Spike"))
@@ -171,6 +170,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             Debug.Log("Collided with spike");
             if(collision.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
             {
+                Debug.Log(spike.IsOpen());
                 if (spike.IsOpen())
                 {
                     collision.gameObject.SetActive(false);
@@ -179,8 +179,8 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
                 else
                 {
                     moveTween?.Kill(false);
-                    transform.position = prevPos;
-                    collision.gameObject.SetActive(false);
+                    transform.position = levelStartPos;
+                    GameManager.Instance.GivePlayerReward(-3);
                     isMoving = false;
                 }
             }
