@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System;
+using Unity.Cinemachine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
@@ -20,11 +21,13 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     bool isMoving = false;
     bool canMove = true;
     Tween moveTween;
-    Vector3 prevPos;
+    Vector3 prevPos; 
+    private CinemachineBasicMultiChannelPerlin camShake;
     protected override void Awake()
     {
         base.Awake();
         OnSwipeDirection += OnPlayerSwipe;
+        camShake = FindFirstObjectByType<CinemachineBasicMultiChannelPerlin>();
     }
     private void Start()
     {
@@ -71,9 +74,13 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             .SetSpeedBased(true)
             .OnComplete(() =>
             {
-                StartCoroutine(GameManager.DoWithDelay(.5f, () =>
+                isMoving = false;
+                camShake.FrequencyGain = 100;
+                camShake.AmplitudeGain = .25f;
+                StartCoroutine(GameManager.DoWithDelay(.3f, () =>
                 {
-                    isMoving = false;
+                    camShake.AmplitudeGain = 0;
+                    camShake.FrequencyGain = 0;
                 }));
             });
     }

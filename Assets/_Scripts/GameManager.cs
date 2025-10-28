@@ -108,6 +108,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             yield break;
         yield return new WaitForSeconds(0.7f);
         effectObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
         form.SetActive(true);
     }
     public void SendTelementry()
