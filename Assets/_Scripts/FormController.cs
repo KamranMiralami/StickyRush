@@ -8,30 +8,24 @@ using static UnityEngine.Rendering.DebugUI;
 public class FormController : MonoBehaviour
 {
     [SerializeField] TMP_InputField inputField1;
-    [SerializeField] GameObject formObject1;
     [SerializeField] TMP_InputField inputField2;
-    [SerializeField] GameObject formObject2;
     [SerializeField] TMP_InputField inputField3;
-    [SerializeField] GameObject formObject3;
-    [SerializeField] float waitTimeOnEffect;
-    void Awake()
+    [SerializeField] TMP_InputField inputField4;
+    [SerializeField] TMP_InputField inputField5;
+    public void OpenForm()
     {
-        StartCoroutine(OpenForm());
-    }
-
-    private IEnumerator OpenForm()
-    {
-        yield return new WaitForSeconds(waitTimeOnEffect);
-        formObject1.SetActive(true);
-        formObject2.SetActive(true);
-        formObject3.SetActive(true);
+        gameObject.SetActive(true);
+        Time.timeScale = 0f;
     }
     
     public void SubmitForm()
     {
+        Time.timeScale = 1f;
         string text1 = inputField1.text;
         string text2 = inputField2.text;
         string text3 = inputField3.text;
+        string text4 = inputField4.text;
+        string text5 = inputField5.text;
         if (int.TryParse(text1, out int number1))
         {
             GameManager.Instance.currentLevelResults.Q1 = number1;
@@ -43,6 +37,14 @@ public class FormController : MonoBehaviour
         if (int.TryParse(text3, out int number3))
         {
             GameManager.Instance.currentLevelResults.Q3 = number3;
+        }
+        if (int.TryParse(text4, out int number4))
+        {
+            GameManager.Instance.currentLevelResults.Q4 = number4;
+        }
+        if (int.TryParse(text5, out int number5))
+        {
+            GameManager.Instance.currentLevelResults.Q5 = number5;
         }
         GameManager.Instance.SendTelementry();
         SceneManager.LoadScene("LevelSelect");

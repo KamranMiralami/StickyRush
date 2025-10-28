@@ -35,7 +35,10 @@ public class SpikeBehaviour : MonoBehaviour
     //     seq.AppendInterval(2f);
     //     seq.SetLoops(-1);
     // }
-
+    private void Awake()
+    {
+        currentTime = -Random.Range(0, 1.5f);
+    }
     void Update()
     {
         currentTime += Time.deltaTime;

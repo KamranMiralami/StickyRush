@@ -9,7 +9,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 {
     public Grid GeneralGrid;
     public Action<int> OnScoreChanged;
-    [SerializeField] GameObject form;
+    [SerializeField] FormController form;
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] CinemachineImpulseSource impulseSource;
     [SerializeField] GameObject effectObject;
@@ -23,7 +23,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void OnEnable()
     {
         base.Awake();
-        currentLevelResults = new(0,0,0,0,false,0,false,false,0,0,0,1);
+        currentLevelResults = new();
         countTime = true;
         PlayerMadeAMove += OnPlayerMoved;
         OnTinyReward += OnTinyRewardRecieved;
@@ -88,8 +88,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void FinishLevel(bool playerWon)
     {
-        if(form !=null) 
-            form.SetActive(true);
         if (impulseSource)
             impulseSource.GenerateImpulseWithForce(0.7f);
         currentLevelResults.win = playerWon;
@@ -104,12 +102,16 @@ public class GameManager : SingletonBehaviour<GameManager>
     private IEnumerator OpenForm()
     {
         countTime = false;
-        if (form == null || effectObject == null)
-            yield break;
-        yield return new WaitForSeconds(0.7f);
-        effectObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        form.SetActive(true);
+        if (effectObject != null)
+        {
+            yield return new WaitForSeconds(0.7f);
+            effectObject.SetActive(true);
+        }
+        if (form != null)
+        {
+            yield return new WaitForSeconds(2f);
+            form.OpenForm();
+        }
     }
     public void SendTelementry()
     {

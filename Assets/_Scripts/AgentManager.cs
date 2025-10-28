@@ -132,7 +132,7 @@ public class AgentManager : Agent
             transform.position = collision.transform.position;
             transform.DOScale(Vector3.one * 1.2f, 0.1f).SetLoops(-1);
             transform.DOKill();
-            AddReward(10000f);
+            AddReward(100f);
             EndEpisode();
             canMove = false;
             Debug.Log("AI finished level");
@@ -143,7 +143,7 @@ public class AgentManager : Agent
             //Debug.Log("Collided with tiny reward");
             collision.gameObject.SetActive(false);
             collectedRewards.Add(collision.gameObject);
-            AddReward(100f);
+            AddReward(10f);
         }
         if (collision.gameObject.CompareTag("Spike"))
         {
@@ -153,14 +153,14 @@ public class AgentManager : Agent
                 if (spike.IsOpen())
                 {
                     collision.gameObject.SetActive(false);
-                    AddReward(200f);
+                    AddReward(20f);
                 }
                 else
                 {
                     moveTween?.Kill(false);
                     transform.position = prevPos;
                     collision.gameObject.SetActive(false);
-                    AddReward(-200f);
+                    AddReward(-20f);
                     moveTween = null;
                 }
                 collectedRewards.Add(collision.gameObject);
@@ -249,7 +249,10 @@ public class AgentManager : Agent
         sensor.AddObservation(futureDown);
         sensor.AddObservation(currentPos);
         sensor.AddObservation((Vector2)reward.transform.position - parentT);
-        
+
+        //Distance to reward (1)
+        sensor.AddObservation(Vector2.Distance(currentPos, (Vector2)reward.transform.position - parentT));
+
         //Already visited (5)
         sensor.AddObservation(visitedLocations.Contains(futureLeft));
         sensor.AddObservation(visitedLocations.Contains(futureRight));
@@ -277,9 +280,9 @@ public class AgentManager : Agent
             return 10;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Trap") && hit.collider.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
             if (spike.IsOpen())
-                return 10;
+                return 20;
             else
-                return -10;
+                return -20;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
             return 0;
         return 0;
