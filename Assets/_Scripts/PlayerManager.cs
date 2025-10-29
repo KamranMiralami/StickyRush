@@ -23,6 +23,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     Tween moveTween;
     Vector3 prevPos; 
     private CinemachineBasicMultiChannelPerlin camShake;
+    [SerializeField] GameObject tutorialDeathText;
     protected override void Awake()
     {
         base.Awake();
@@ -195,6 +196,9 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
                 {
                     moveTween?.Kill(false);
                     transform.position = levelStartPos;
+                    // Only used in tutorial but easiest to add here
+                    if (tutorialDeathText)
+                        tutorialDeathText.SetActive(true);
                     GameManager.Instance.OnHitSpike?.Invoke(false);
                     isMoving = false;
                 }

@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
@@ -102,11 +103,20 @@ public class GameManager : SingletonBehaviour<GameManager>
             impulseSource.GenerateImpulseWithForce(0.7f);
         currentLevelResults.win = playerWon;
         var agent = FindFirstObjectByType<AgentManager>();
-        currentLevelResults.isMlAgent = !agent.isRandom;
-        currentLevelResults.levelNumber = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex-1;
+        if (agent)
+            currentLevelResults.isMlAgent = !agent.isRandom;
+        if (int.TryParse(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Split(' ')[^1], out int number))
+            currentLevelResults.levelNumber = number;
+        else
+            currentLevelResults.levelNumber = -1;
+        Debug.Log(currentLevelResults.levelNumber);
         currentLevelResults.time = startTime;
         currentLevelResults.final_score = Score;
-        StartCoroutine(OpenForm(playerWon));
+
+        if (currentLevelResults.levelNumber == -1)
+            StartCoroutine(ImmediatelyGoToLevelSelect());
+        else
+            StartCoroutine(OpenForm(playerWon));
     }
 
     private IEnumerator OpenForm(bool playerWon)
@@ -127,5 +137,11 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         if(APIHandler.Instance != null)
             APIHandler.Instance.SendData(currentLevelResults);
+    }
+
+    IEnumerator ImmediatelyGoToLevelSelect()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("LevelSelect");
     }
 }
