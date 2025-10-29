@@ -23,12 +23,14 @@ public class AgentManager : Agent
     [SerializeField] LayerMask notPlayerMask;
     [SerializeField] public bool isRandom;
     [SerializeField] GameObject reward;
+    Vector2 levelStartPos;
 
     bool canMove = true;
     List<GameObject> collectedRewards;
     protected override void Awake()
     {
         base.Awake();
+        levelStartPos = transform.position;
         collectedRewards = new();
         OnSwipeDirection += OnPlayerSwipe;
         fixToGrid = GetComponent<FixToGrid>();
@@ -71,7 +73,6 @@ public class AgentManager : Agent
         //Animations
         if (animationControllerScript)
             animationControllerScript.SetDirection(dir);
-        prevPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         moveTween = transform.DOMove(targetPos, movementSpeed)
             .SetEase(Ease.InSine)
             .SetSpeedBased(true)
@@ -158,7 +159,7 @@ public class AgentManager : Agent
                 else
                 {
                     moveTween?.Kill(false);
-                    transform.position = prevPos;
+                    transform.position = levelStartPos;
                     collision.gameObject.SetActive(false);
                     AddReward(-20f);
                     moveTween = null;
@@ -198,7 +199,7 @@ public class AgentManager : Agent
         //Debug.Log("AI deciding on action : " + dir);
         OnSwipeDirection?.Invoke(dir);
         // Penalty given each step to encourage agent to finish task quickly.
-        AddReward(-1f);
+        AddReward(-2f);
     }
     public override void OnEpisodeBegin()
     {
