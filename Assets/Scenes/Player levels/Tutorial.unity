@@ -5621,6 +5621,10 @@ PrefabInstance:
       propertyPath: tutorialDeathText
       value: 
       objectReference: {fileID: 956391188}
+    - target: {fileID: 1682436593276777619, guid: 773b3b8f0d68d9740bc189dcff98fac1, type: 3}
+      propertyPath: decreaseScoreOnMove
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3857909352395062743, guid: 773b3b8f0d68d9740bc189dcff98fac1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.49
