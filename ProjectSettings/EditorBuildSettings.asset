@@ -22,7 +22,7 @@ EditorBuildSettings:
     guid: c3a03dce54d2cde4f8e743b83428edcc
   - enabled: 1
     path: Assets/Scenes/Player levels/Level 4.unity
-    guid: cbb65fcdb96178741b16c4fcc98ceb57
+    guid: c6191b0fe5e38144ca600ec3f41f8b87
   - enabled: 1
     path: Assets/Scenes/Player levels/Level 5.unity
     guid: 9b78e85f1a60dc64e8512d0e5fffd629
@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Player levels/Level 3 Old.unity
     guid: 0461a0d165852664bb6fdea3a04dc536
+  - enabled: 0
+    path: Assets/Scenes/Player levels/Level 4.unity
+    guid: cbb65fcdb96178741b16c4fcc98ceb57
   - enabled: 0
     path: Assets/Scenes/PrototypeScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
