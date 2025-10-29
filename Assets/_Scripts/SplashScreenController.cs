@@ -7,6 +7,6 @@ public class SplashScreenController : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            SceneManager.LoadScene("LevelSelect");
+            SceneManager.LoadScene("Tutorial");
     }
 }
