@@ -7,17 +7,30 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class FormController : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI WonOrLost;
     [SerializeField] TMP_InputField inputField1;
     [SerializeField] TMP_InputField inputField2;
     [SerializeField] TMP_InputField inputField3;
     [SerializeField] TMP_InputField inputField4;
     [SerializeField] TMP_InputField inputField5;
-    public void OpenForm()
+    public void OpenForm(bool playerWon)
     {
         gameObject.SetActive(true);
         Time.timeScale = 0f;
+        if(playerWon)
+        {
+            WonOrLost.text = "You Win!";
+        }
+        else
+        {
+            WonOrLost.text = "You Lost!";
+        }
     }
-    
+    public void RestartLevel()
+    {
+        GameManager.Instance.SendTelementry();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     public void SubmitForm()
     {
         Time.timeScale = 1f;

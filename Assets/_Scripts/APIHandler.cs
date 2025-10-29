@@ -5,7 +5,7 @@ using System.Text;
 
 public class LevelResults
 {
-    public int final_score;
+    public float final_score;
     public int tinyRewards;
     public float time;
     public int spikes_removed;

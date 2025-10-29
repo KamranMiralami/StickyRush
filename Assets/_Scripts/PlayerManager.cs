@@ -28,6 +28,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
         base.Awake();
         OnSwipeDirection += OnPlayerSwipe;
         camShake = FindFirstObjectByType<CinemachineBasicMultiChannelPerlin>();
+        GameManager.Instance.GivePlayerReward(20); // starting reward
     }
     private void Start()
     {
@@ -82,6 +83,10 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
                     camShake.AmplitudeGain = 0;
                     camShake.FrequencyGain = 0;
                 }));
+            })
+            .OnUpdate(() =>
+            {
+                GameManager.Instance.GivePlayerReward(-4f * Time.deltaTime);
             });
     }
     private void Update()
@@ -161,7 +166,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             //transform.DOScale(Vector3.one * 1.2f, 0.1f).SetLoops(-1);
             collision.gameObject.SetActive(false);
             canMove = false;
-            GameManager.Instance.GivePlayerReward(10);
+            GameManager.Instance.GivePlayerReward(20);
             GameManager.Instance.FinishLevel(true);
         }
         if (collision.gameObject.CompareTag("TinyReward"))
@@ -179,19 +184,18 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             Debug.Log("Collided with spike");
             if(collision.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
             {
-                Debug.Log(spike.IsOpen());
-                if (spike.IsOpen())
+                Debug.Log(spike.IsOpen);
+                if (spike.IsOpen)
                 {
                     collision.gameObject.SetActive(false);
                     GameManager.Instance.OnHitSpike?.Invoke(true);
-                    GameManager.Instance.GivePlayerReward(3);
+                    GameManager.Instance.GivePlayerReward(2);
                 }
                 else
                 {
                     moveTween?.Kill(false);
                     transform.position = levelStartPos;
                     GameManager.Instance.OnHitSpike?.Invoke(false);
-                    GameManager.Instance.GivePlayerReward(-3);
                     isMoving = false;
                 }
             }

@@ -34,6 +34,10 @@ behaviors:
           memory: null
           goal_conditioning_type: hyper
           deterministic: false
+      curiosity:
+        strength: 0.05
+        gamma: 0.99
+        encoding_size: 256
     init_path: null
     keep_checkpoints: 5
     even_checkpoints: false

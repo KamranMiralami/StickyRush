@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Player levels/Level 5.unity
     guid: 9b78e85f1a60dc64e8512d0e5fffd629
+  - enabled: 1
+    path: Assets/Scenes/Player levels/Level 6.unity
+    guid: 33a3d211c747cf34f9c882b499520aaf
   - enabled: 0
     path: Assets/Scenes/PrototypeScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02

@@ -18,12 +18,11 @@ public class AgentManager : Agent
     Tween moveTween;
     FixToGrid fixToGrid;
     Vector3 initialPosition;
-    Vector3 prevPos;
-    HashSet<Vector2> visitedLocations;
     [SerializeField] LayerMask notPlayerMask;
     [SerializeField] public bool isRandom;
     [SerializeField] GameObject reward;
     Vector2 levelStartPos;
+    HashSet<Vector2> visitedLocations;
 
     bool canMove = true;
     List<GameObject> collectedRewards;
@@ -151,7 +150,7 @@ public class AgentManager : Agent
             //Debug.Log("Collided with spike");
             if (collision.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
             {
-                if (spike.IsOpen())
+                if (spike.IsOpen)
                 {
                     collision.gameObject.SetActive(false);
                     AddReward(20f);
@@ -160,6 +159,7 @@ public class AgentManager : Agent
                 {
                     moveTween?.Kill(false);
                     transform.position = levelStartPos;
+                    visitedLocations = new();
                     collision.gameObject.SetActive(false);
                     AddReward(-20f);
                     moveTween = null;
@@ -197,9 +197,76 @@ public class AgentManager : Agent
         // Move the agent using the action.
         var dir = ParseActionToVector2(actionBuffers.DiscreteActions);
         //Debug.Log("AI deciding on action : " + dir);
+        var visitingLoc = new Vector2(transform.position.x, transform.position.y);
+        visitedLocations.Add(visitingLoc);
+        StartCoroutine(GameManager.DoWithDelay(3f, () =>
+        {
+            visitedLocations.Remove(visitingLoc);
+        }));
         OnSwipeDirection?.Invoke(dir);
         // Penalty given each step to encourage agent to finish task quickly.
-        AddReward(-2f);
+        Vector2 currentPos = new(transform.position.x, transform.position.y);
+        var parentT = (Vector2)transform.parent.transform.position;
+        currentPos -= parentT;
+        var dif = Vector2.Distance(currentPos, (Vector2)reward.transform.position - parentT);
+        AddReward(dif * -1f);
+    }
+    public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
+    {
+        var futureLeft = GetFuturePos(Vector2.left);
+        var futureRight = GetFuturePos(Vector2.right);
+        var futureUp = GetFuturePos(Vector2.up);
+        var futureDown = GetFuturePos(Vector2.down);
+        var possibleActions = 4;
+        if (futureLeft == (Vector2)transform.position)
+        {
+            possibleActions--;
+            actionMask.SetActionEnabled(0, 0, false); // disable futureLeft
+        }
+        if (futureRight == (Vector2)transform.position)
+        {
+            possibleActions--;
+            actionMask.SetActionEnabled(0, 1, false); // disable futureRight
+        }
+        if (futureUp == (Vector2)transform.position)
+        {
+            possibleActions--;
+            actionMask.SetActionEnabled(0, 2, false); // disable futureUp
+        }
+        if (futureDown == (Vector2)transform.position)
+        {
+            possibleActions--;
+            actionMask.SetActionEnabled(0, 3, false); // disable futureDown
+        }
+        var sawUp = visitedLocations.Contains(futureUp);
+        var sawDown = visitedLocations.Contains(futureDown);
+        var sawLeft = visitedLocations.Contains(futureLeft);
+        var sawRight = visitedLocations.Contains(futureRight);
+        if((sawLeft && sawUp && sawRight && sawDown) || possibleActions <=1)
+        {
+            // all directions have been visited, do not disable anything
+            return;
+        }
+        if (sawDown && possibleActions > 1)
+        {
+            possibleActions--;
+            actionMask.SetActionEnabled(0, 3, false); // disable futureDown
+        }
+        if (sawLeft && possibleActions > 1)
+        {
+            possibleActions--;
+            actionMask.SetActionEnabled(0, 0, false); // disable futureLeft
+        }
+        if (sawUp && possibleActions > 1)
+        {
+            possibleActions--;
+            actionMask.SetActionEnabled(0, 2, false); // disable futureUp
+        }
+        if (sawRight && possibleActions > 1)
+        {
+            possibleActions--;
+            actionMask.SetActionEnabled(0, 1, false); // disable futureRight
+        }
     }
     public override void OnEpisodeBegin()
     {
@@ -227,16 +294,6 @@ public class AgentManager : Agent
         Vector2 currentPos = new(transform.position.x, transform.position.y);
         currentPos -= parentT;
 
-        float numberOfNewOptions = 0;
-        if (visitedLocations.Contains(futureLeft))
-            numberOfNewOptions += 1;
-        if (visitedLocations.Contains(futureRight))
-            numberOfNewOptions += 1;
-        if (visitedLocations.Contains(futureUp))
-            numberOfNewOptions += 1;
-        if (visitedLocations.Contains(futureDown))
-            numberOfNewOptions += 1;
-
         //Safety (4)
         sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.left));
         sensor.AddObservation(CheckSafetyValue(currentPos, Vector2.right));
@@ -253,19 +310,6 @@ public class AgentManager : Agent
 
         //Distance to reward (1)
         sensor.AddObservation(Vector2.Distance(currentPos, (Vector2)reward.transform.position - parentT));
-
-        //Already visited (5)
-        sensor.AddObservation(visitedLocations.Contains(futureLeft));
-        sensor.AddObservation(visitedLocations.Contains(futureRight));
-        sensor.AddObservation(visitedLocations.Contains(futureUp));
-        sensor.AddObservation(visitedLocations.Contains(futureDown));
-        if (visitedLocations.Contains(currentPos))
-            sensor.AddObservation(true);
-        else
-        {
-            sensor.AddObservation(false);
-            visitedLocations.Add(currentPos);
-        }
     }
 
     int CheckSafetyValue(Vector2 currentPos, Vector2 dir)
@@ -280,10 +324,8 @@ public class AgentManager : Agent
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("TinyReward"))
             return 10;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Trap") && hit.collider.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
-            if (spike.IsOpen())
+            if (spike.IsOpen)
                 return 20;
-            else
-                return -20;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
             return 0;
         return 0;

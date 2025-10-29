@@ -8,7 +8,7 @@ using UnityEngine;
 public class GameManager : SingletonBehaviour<GameManager>
 {
     public Grid GeneralGrid;
-    public Action<int> OnScoreChanged;
+    public Action<float> OnScoreChanged;
     [SerializeField] FormController form;
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] CinemachineImpulseSource impulseSource;
@@ -29,6 +29,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         OnTinyReward += OnTinyRewardRecieved;
         OnPlayerQuit += OnPlayerQuitGame;
         OnHitSpike += OnPlayerHitSpike;
+        OnScoreChanged += ScoreChanged;
     }
 
     private void OnPlayerHitSpike(bool obj)
@@ -61,21 +62,30 @@ public class GameManager : SingletonBehaviour<GameManager>
         if(countTime)
             startTime += Time.deltaTime;
     }
-    public int Score
+    public float Score
     {
         get { return _score; } 
         private set 
         { 
             _score = value; 
-            OnScoreChanged?.Invoke(_score);
+            _score = Mathf.Clamp(_score, 0f, float.MaxValue);
+            var shownScore = Mathf.RoundToInt(_score * 100f) / 100f;
+            OnScoreChanged?.Invoke(shownScore);
         }
     }
-    int _score;
-    public void GivePlayerReward(int val)
+    float _score;
+    public void GivePlayerReward(float val)
     {
         Score += val;
-        if (scoreText)
-            scoreText.text = Score.ToString();
+        if(Score <= 0)
+        {
+            FinishLevel(false);
+        }
+    }
+    public void ScoreChanged(float val)
+    {
+        if (scoreText != null)
+            scoreText.text = val.ToString();
     }
     public float GetGridSize()
     {
@@ -96,10 +106,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         currentLevelResults.levelNumber = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex-1;
         currentLevelResults.time = startTime;
         currentLevelResults.final_score = Score;
-        StartCoroutine(OpenForm());
+        StartCoroutine(OpenForm(playerWon));
     }
 
-    private IEnumerator OpenForm()
+    private IEnumerator OpenForm(bool playerWon)
     {
         countTime = false;
         if (effectObject != null)
@@ -110,11 +120,12 @@ public class GameManager : SingletonBehaviour<GameManager>
         if (form != null)
         {
             yield return new WaitForSeconds(2f);
-            form.OpenForm();
+            form.OpenForm(playerWon);
         }
     }
     public void SendTelementry()
     {
-        APIHandler.Instance.SendData(currentLevelResults);
+        if(APIHandler.Instance != null)
+            APIHandler.Instance.SendData(currentLevelResults);
     }
 }
