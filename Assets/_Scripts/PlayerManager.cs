@@ -5,7 +5,6 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
-
 public class PlayerManager :  SingletonBehaviour<PlayerManager>
 {
     //Animations
@@ -16,6 +15,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     [SerializeField] float movementSpeed = 10f;
     [SerializeField]GameObject pickUpEffect;
     Vector2 startPos;
+    WeeWooBackground weeWooBackground;
     Grid grid;
     bool isMoving = false;
     bool canMove = true;
@@ -36,7 +36,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     private Vector2 GetFuturePos(Vector2 dir)
     {
         // cast a ray only against walls
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 100f, LayerMask.GetMask("Wall"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 300f, LayerMask.GetMask("Wall"));
         if (hit.collider != null)
         {
             // move to cell just before the wall
@@ -141,12 +141,28 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
         }
         if (collision.gameObject.CompareTag("TinyReward"))
         {
+<<<<<<< Updated upstream
+=======
+            var animator = collision.GetComponentInChildren<Animator>();
+
+>>>>>>> Stashed changes
             Debug.Log("Collided with tiny reward");
             collision.gameObject.SetActive(false);
             pickUpEffect.transform.position = collision.transform.position;
             PickupAnimator.enabled = true;
             PickupRenderer.enabled = true;
             PickupAnimator.Play("Got_tiny_reward");
+            GameManager.Instance.GivePlayerReward(1);
+        }
+        if (collision.gameObject.CompareTag("TriggerReward"))
+        {
+            WeeWooBackground.Instance.StartCoroutine(WeeWooBackground.Instance.ColorChanger());
+            var animator = collision.GetComponentInChildren<Animator>();
+
+            Debug.Log("Collided with Trigger reward");
+            animator.SetTrigger("PickUpReward");
+            Destroy(collision.gameObject, 1f);
+            GameManager.Instance.OnTinyReward?.Invoke();
             GameManager.Instance.GivePlayerReward(1);
         }
         if (collision.gameObject.CompareTag("Spike"))

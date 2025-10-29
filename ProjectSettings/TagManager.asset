@@ -9,6 +9,7 @@ TagManager:
   - TinyReward
   - Spike
   - AI Camera
+  - TriggerReward
   layers:
   - Default
   - TransparentFX
