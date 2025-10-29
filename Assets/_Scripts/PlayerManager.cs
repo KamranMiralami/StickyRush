@@ -24,6 +24,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     Vector3 prevPos; 
     private CinemachineBasicMultiChannelPerlin camShake;
     [SerializeField] GameObject tutorialDeathText;
+    [SerializeField] bool decreaseScoreOnMove = true;
     protected override void Awake()
     {
         base.Awake();
@@ -87,7 +88,8 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             })
             .OnUpdate(() =>
             {
-                GameManager.Instance.GivePlayerReward(-4f * Time.deltaTime);
+                if (decreaseScoreOnMove)
+                    GameManager.Instance.GivePlayerReward(-4f * Time.deltaTime);
             });
     }
     private void Update()
@@ -137,19 +139,19 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             OnSwipeDirection?.Invoke(Vector2.up);
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             OnSwipeDirection?.Invoke(Vector2.down);
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             OnSwipeDirection?.Invoke(Vector2.left);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             OnSwipeDirection?.Invoke(Vector2.right);
         }

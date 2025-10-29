@@ -8,7 +8,7 @@ public class SpikeBehaviour : MonoBehaviour
     [SerializeField] float stateTime = 2f;
     [SerializeField] float currentTime = 0f;
     bool isOpen;
-    public bool IsOpen => !isOpen;
+    public bool IsOpen => isOpen;
     void Update()
     {
         currentTime += Time.deltaTime; 
@@ -19,7 +19,7 @@ public class SpikeBehaviour : MonoBehaviour
             if (isOpen)
             {
                 animator.SetTrigger("Close");
-                StartCoroutine(GameManager.DoWithDelay(0.3f, () =>
+                StartCoroutine(GameManager.DoWithDelay(0.5f, () =>
                 {
                     isOpen = false;
                 }));
