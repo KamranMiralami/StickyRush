@@ -22,7 +22,7 @@ public class AgentManager : Agent
     [SerializeField] public bool isRandom;
     [SerializeField] GameObject reward;
     Vector2 levelStartPos;
-    HashSet<Vector2> visitedLocations;
+    Dictionary<Vector2,float> visitedLocationsTimer;
 
     bool canMove = true;
     List<GameObject> collectedRewards;
@@ -159,7 +159,7 @@ public class AgentManager : Agent
                 {
                     moveTween?.Kill(false);
                     transform.position = levelStartPos;
-                    visitedLocations = new();
+                    visitedLocationsTimer = new();
                     collision.gameObject.SetActive(false);
                     AddReward(-20f);
                     moveTween = null;
@@ -198,11 +198,13 @@ public class AgentManager : Agent
         var dir = ParseActionToVector2(actionBuffers.DiscreteActions);
         //Debug.Log("AI deciding on action : " + dir);
         var visitingLoc = new Vector2(transform.position.x, transform.position.y);
-        visitedLocations.Add(visitingLoc);
-        StartCoroutine(GameManager.DoWithDelay(3f, () =>
+        if (visitedLocationsTimer.ContainsKey(visitingLoc))
+            visitedLocationsTimer[visitingLoc] = Time.time;
+        else
         {
-            visitedLocations.Remove(visitingLoc);
-        }));
+            visitedLocationsTimer.Add(visitingLoc, Time.time);
+        }
+
         OnSwipeDirection?.Invoke(dir);
         // Penalty given each step to encourage agent to finish task quickly.
         Vector2 currentPos = new(transform.position.x, transform.position.y);
@@ -211,8 +213,18 @@ public class AgentManager : Agent
         var dif = Vector2.Distance(currentPos, (Vector2)reward.transform.position - parentT);
         AddReward(dif * -1f);
     }
+    public Vector2 WasAtPosition(Vector2 pos)
+    {
+        foreach (var p in visitedLocationsTimer.Keys)
+            if (Vector3.Distance(p, pos) < 0.1f && visitedLocationsTimer[p] + 5f > Time.time)
+            {
+                return p;
+            }
+        return Vector2.zero;
+    }
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
     {
+        bool canUp = true, canLeft = true, canDown = true, canRight = true;
         var futureLeft = GetFuturePos(Vector2.left);
         var futureRight = GetFuturePos(Vector2.right);
         var futureUp = GetFuturePos(Vector2.up);
@@ -221,57 +233,88 @@ public class AgentManager : Agent
         if (futureLeft == (Vector2)transform.position)
         {
             possibleActions--;
+            canLeft = false;
             actionMask.SetActionEnabled(0, 0, false); // disable futureLeft
         }
         if (futureRight == (Vector2)transform.position)
         {
             possibleActions--;
+            canRight = false;
             actionMask.SetActionEnabled(0, 1, false); // disable futureRight
         }
         if (futureUp == (Vector2)transform.position)
         {
             possibleActions--;
+            canUp = false;
             actionMask.SetActionEnabled(0, 2, false); // disable futureUp
         }
         if (futureDown == (Vector2)transform.position)
         {
             possibleActions--;
+            canDown = false;
             actionMask.SetActionEnabled(0, 3, false); // disable futureDown
         }
-        var sawUp = visitedLocations.Contains(futureUp);
-        var sawDown = visitedLocations.Contains(futureDown);
-        var sawLeft = visitedLocations.Contains(futureLeft);
-        var sawRight = visitedLocations.Contains(futureRight);
-        if((sawLeft && sawUp && sawRight && sawDown) || possibleActions <=1)
+        if (possibleActions <= 1) return;
+        if (canLeft)
         {
-            // all directions have been visited, do not disable anything
-            return;
+            var res = WasAtPosition(futureLeft);
+            if (res != Vector2.zero)
+            {
+                possibleActions--;
+                actionMask.SetActionEnabled(0, 0, false); // disable futureLeft
+            }
         }
-        if (sawDown && possibleActions > 1)
+        if (canRight)
         {
-            possibleActions--;
-            actionMask.SetActionEnabled(0, 3, false); // disable futureDown
+            var res = WasAtPosition(futureRight);
+            if (res != Vector2.zero)
+            {
+                possibleActions--;
+                actionMask.SetActionEnabled(0, 1, false); // disable futureRight
+            }
         }
-        if (sawLeft && possibleActions > 1)
+        if (canUp)
         {
-            possibleActions--;
-            actionMask.SetActionEnabled(0, 0, false); // disable futureLeft
+            var res = WasAtPosition(futureUp);
+            if (res != Vector2.zero)
+            {
+                possibleActions--;
+                actionMask.SetActionEnabled(0, 2, false); // disable futureUp
+            }
         }
-        if (sawUp && possibleActions > 1)
+        if (canDown)
         {
-            possibleActions--;
-            actionMask.SetActionEnabled(0, 2, false); // disable futureUp
+            var res = WasAtPosition(futureDown);
+            if (res != Vector2.zero)
+            {
+                possibleActions--;
+                actionMask.SetActionEnabled(0, 3, false); // disable futureDown
+            }
         }
-        if (sawRight && possibleActions > 1)
+        if (possibleActions <= 0)
         {
-            possibleActions--;
-            actionMask.SetActionEnabled(0, 1, false); // disable futureRight
+            if (futureLeft != (Vector2)transform.position)
+            {
+                actionMask.SetActionEnabled(0, 0, true); // enable futureLeft
+            }
+            if (futureRight != (Vector2)transform.position)
+            {
+                actionMask.SetActionEnabled(0, 1, true); // enable futureLeft
+            }
+            if (futureUp != (Vector2)transform.position)
+            {
+                actionMask.SetActionEnabled(0, 2, true); // enable futureLeft
+            }
+            if (futureDown != (Vector2)transform.position)
+            {
+                actionMask.SetActionEnabled(0, 3, true); // enable futureLeft
+            }
         }
     }
     public override void OnEpisodeBegin()
     {
         //Debug.Log("Begining Episode");
-        visitedLocations = new HashSet<Vector2>();
+        visitedLocationsTimer = new();
         transform.position = initialPosition;
         fixToGrid.SnapToGrid();
         canMove = true;

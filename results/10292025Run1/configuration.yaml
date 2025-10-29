@@ -72,7 +72,7 @@ engine_settings:
   width: 84
   height: 84
   quality_level: 5
-  time_scale: 4.0
+  time_scale: 1.0
   target_frame_rate: -1
   capture_frame_rate: 60
   no_graphics: false
@@ -82,8 +82,8 @@ checkpoint_settings:
   run_id: 10292025Run1
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
   results_dir: results
