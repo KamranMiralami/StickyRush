@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] GameObject infoMenu;
-
+    [SerializeField] GameObject settingsMenu;
+    [SerializeField] Slider volumeSlider;
+    bool settingsOpen;
+    
     public void BackToLevelSelect()
     {
         GameManager.Instance.currentLevelResults.playerQuit = true;
@@ -20,5 +24,19 @@ public class UIController : MonoBehaviour
     public void CloseInfoMenu()
     {
         infoMenu.SetActive(false);
+    }
+
+    public void ClickSettingsButton()
+    {
+        settingsOpen = !settingsOpen;
+        settingsMenu.SetActive(settingsOpen);
+
+        if (settingsOpen)
+            volumeSlider.value = MusicPlayer.instance.GetVolume();
+    }
+
+    public void SetVolume()
+    {
+        MusicPlayer.instance.SetVolume(volumeSlider.value);
     }
 }
