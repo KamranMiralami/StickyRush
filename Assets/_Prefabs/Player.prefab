@@ -96,7 +96,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499009035661232436}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 54a8c4314c161ad4dbfc82e74bfec2b5, type: 2}
   m_CullingMode: 0
@@ -206,7 +206,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889934675716810243}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6b1df9b96d6d00442826175ff8779d7f, type: 2}
   m_CullingMode: 0
@@ -316,7 +316,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810723295312032984}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3ec1048a77c47c140b27904c9d570394, type: 2}
   m_CullingMode: 0
@@ -426,7 +426,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6849549042657830005}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6b1df9b96d6d00442826175ff8779d7f, type: 2}
   m_CullingMode: 0
@@ -509,6 +509,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSwipeDistance: 100
   movementSpeed: 25
+  tutorialDeathText: {fileID: 0}
+  decreaseScoreOnMove: 1
 --- !u!114 &5296969936574074698
 MonoBehaviour:
   m_ObjectHideFlags: 0
