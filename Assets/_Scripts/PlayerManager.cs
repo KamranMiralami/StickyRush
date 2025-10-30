@@ -25,15 +25,17 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     private CinemachineBasicMultiChannelPerlin camShake;
     [SerializeField] GameObject tutorialDeathText;
     [SerializeField] bool decreaseScoreOnMove = true;
+    [SerializeField] float initialReward = 20f;
     protected override void Awake()
     {
         base.Awake();
         OnSwipeDirection += OnPlayerSwipe;
         camShake = FindFirstObjectByType<CinemachineBasicMultiChannelPerlin>();
-        GameManager.Instance.GivePlayerReward(20); // starting reward
+        GameManager.Instance.GivePlayerReward(initialReward); // starting reward
     }
     private void Start()
     {
+        Time.timeScale = 1f;
         levelStartPos = transform.position;
         animationControllerScript = GetComponent<SetDirectionalAnimations>();
         if (!animationControllerScript)

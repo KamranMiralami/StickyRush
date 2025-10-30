@@ -13,7 +13,7 @@ public class FormController : MonoBehaviour
     [SerializeField] TMP_InputField inputField3;
     [SerializeField] TMP_InputField inputField4;
     [SerializeField] TMP_InputField inputField5;
-    public void OpenForm(bool playerWon)
+    public void OpenForm(bool playerWon, string reason)
     {
         gameObject.SetActive(true);
         Time.timeScale = 0f;
@@ -23,7 +23,7 @@ public class FormController : MonoBehaviour
         }
         else
         {
-            WonOrLost.text = "You Lost!";
+            WonOrLost.text = "You Lost! "+reason;
         }
     }
     public void RestartLevel()

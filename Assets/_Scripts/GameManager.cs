@@ -133,7 +133,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         if (form != null)
         {
             yield return new WaitForSeconds(2f);
-            form.OpenForm(playerWon);
+            form.OpenForm(playerWon, !playerWon?"Your score reached zero":"");
         }
     }
     public void SendTelementry()
