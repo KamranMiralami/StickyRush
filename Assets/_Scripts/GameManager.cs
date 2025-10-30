@@ -21,6 +21,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public Action OnPlayerQuit;
     private float startTime;
     bool countTime;
+    bool finishedGame;
     private void OnEnable()
     {
         base.Awake();
@@ -99,13 +100,15 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     public void FinishLevel(bool playerWon)
     {
+        if(finishedGame) return;
+        if (!finishedGame) finishedGame = true;
         if (impulseSource)
             impulseSource.GenerateImpulseWithForce(0.7f);
         currentLevelResults.win = playerWon;
         var agent = FindFirstObjectByType<AgentManager>();
         if (agent)
             currentLevelResults.isMlAgent = !agent.isRandom;
-        if (int.TryParse(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Split(' ')[^1], out int number))
+        if (int.TryParse(SceneManager.GetActiveScene().name.Split(' ')[^1], out int number))
             currentLevelResults.levelNumber = number;
         else
             currentLevelResults.levelNumber = -1;

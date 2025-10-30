@@ -28,8 +28,9 @@ public class FormController : MonoBehaviour
     }
     public void RestartLevel()
     {
+        Time.timeScale = 1f;
         GameManager.Instance.SendTelementry();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void SubmitForm()
     {

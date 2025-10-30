@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class FixToGrid : MonoBehaviour
@@ -23,8 +24,9 @@ public class FixToGrid : MonoBehaviour
         return cell;
     }
     [ContextMenu("Snap To Grid")]
-    public void SnapToGrid()
+    public async void SnapToGrid()
     {
+        await Task.Delay(100);
         Vector3Int cell = GeneralGrid.WorldToCell(transform.position);
         transform.position = GeneralGrid.GetCellCenterWorld(cell);
     }
