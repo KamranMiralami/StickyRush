@@ -2182,6 +2182,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GeneralGrid: {fileID: 1771571244}
   Reward: {fileID: 56876766}
+  form: {fileID: 0}
+  scoreText: {fileID: 0}
+  impulseSource: {fileID: 0}
+  effectObject: {fileID: 0}
 --- !u!1 &1771571240
 GameObject:
   m_ObjectHideFlags: 0

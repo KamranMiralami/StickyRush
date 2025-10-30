@@ -1446,6 +1446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GeneralGrid: {fileID: 1771571244}
   Reward: {fileID: 56876766}
+  form: {fileID: 0}
 --- !u!1 &1771571240
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,7 +1769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7538974405240636146, guid: 773b3b8f0d68d9740bc189dcff98fac1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

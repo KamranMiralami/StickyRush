@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System;
+using Unity.Cinemachine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Policies;
@@ -14,20 +15,26 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
     public Action<Vector2> OnSwipeDirection;
     [SerializeField] float minSwipeDistance = 10f;
     [SerializeField] float movementSpeed = 10f;
-    [SerializeField]GameObject pickUpEffect;
+    Vector2 levelStartPos;
     Vector2 startPos;
     Grid grid;
     bool isMoving = false;
     bool canMove = true;
     Tween moveTween;
-    Vector3 prevPos;
+    Vector3 prevPos; 
+    private CinemachineBasicMultiChannelPerlin camShake;
+    [SerializeField] GameObject tutorialDeathText;
+    [SerializeField] bool decreaseScoreOnMove = true;
     protected override void Awake()
     {
         base.Awake();
         OnSwipeDirection += OnPlayerSwipe;
+        camShake = FindFirstObjectByType<CinemachineBasicMultiChannelPerlin>();
+        GameManager.Instance.GivePlayerReward(20); // starting reward
     }
     private void Start()
     {
+        levelStartPos = transform.position;
         animationControllerScript = GetComponent<SetDirectionalAnimations>();
         if (!animationControllerScript)
             Debug.Log("In order to use animations on this, you need a SetDirectionalAnimations script", this);
@@ -64,15 +71,25 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             animationControllerScript.SetDirection(dir);
         isMoving = true;
         prevPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        GameManager.Instance.PlayerMadeAMove?.Invoke();
         moveTween = transform.DOMove(targetPos, movementSpeed)
             .SetEase(Ease.InSine)
             .SetSpeedBased(true)
             .OnComplete(() =>
             {
-                StartCoroutine(GameManager.DoWithDelay(.5f, () =>
+                isMoving = false;
+                camShake.FrequencyGain = 100;
+                camShake.AmplitudeGain = .25f;
+                StartCoroutine(GameManager.DoWithDelay(.3f, () =>
                 {
-                    isMoving = false;
+                    camShake.AmplitudeGain = 0;
+                    camShake.FrequencyGain = 0;
                 }));
+            })
+            .OnUpdate(() =>
+            {
+                if (decreaseScoreOnMove)
+                    GameManager.Instance.GivePlayerReward(-4f * Time.deltaTime);
             });
     }
     private void Update()
@@ -122,11 +139,27 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            OnSwipeDirection?.Invoke(Vector2.up);
+        }
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            OnSwipeDirection?.Invoke(Vector2.down);
+        }
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            OnSwipeDirection?.Invoke(Vector2.left);
+        }
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            OnSwipeDirection?.Invoke(Vector2.right);
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var PickupAnimator = pickUpEffect.GetComponent<Animator>();
-        var PickupRenderer = pickUpEffect.GetComponent<SpriteRenderer>();
+        
         if (collision.gameObject.CompareTag("Reward"))
         {
             Debug.Log("Collided with reward");
@@ -136,17 +169,17 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             //transform.DOScale(Vector3.one * 1.2f, 0.1f).SetLoops(-1);
             collision.gameObject.SetActive(false);
             canMove = false;
-            GameManager.Instance.GivePlayerReward(10);
-            GameManager.Instance.FinishLevel();
+            GameManager.Instance.GivePlayerReward(20);
+            GameManager.Instance.FinishLevel(true);
         }
         if (collision.gameObject.CompareTag("TinyReward"))
         {
+            var animator = collision.GetComponentInChildren<Animator>();
+            
             Debug.Log("Collided with tiny reward");
-            collision.gameObject.SetActive(false);
-            pickUpEffect.transform.position = collision.transform.position;
-            PickupAnimator.enabled = true;
-            PickupRenderer.enabled = true;
-            PickupAnimator.Play("Got_tiny_reward");
+            animator.SetTrigger("PickUpReward");
+            Destroy(collision.gameObject, 1f);
+            GameManager.Instance.OnTinyReward?.Invoke();
             GameManager.Instance.GivePlayerReward(1);
         }
         if (collision.gameObject.CompareTag("Spike"))
@@ -154,16 +187,21 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             Debug.Log("Collided with spike");
             if(collision.gameObject.TryGetComponent<SpikeBehaviour>(out SpikeBehaviour spike))
             {
-                if (spike.IsOpen())
+                Debug.Log(spike.IsOpen);
+                if (spike.IsOpen)
                 {
                     collision.gameObject.SetActive(false);
-                    GameManager.Instance.GivePlayerReward(3);
+                    GameManager.Instance.OnHitSpike?.Invoke(true);
+                    GameManager.Instance.GivePlayerReward(2);
                 }
                 else
                 {
                     moveTween?.Kill(false);
-                    transform.position = prevPos;
-                    collision.gameObject.SetActive(false);
+                    transform.position = levelStartPos;
+                    // Only used in tutorial but easiest to add here
+                    if (tutorialDeathText)
+                        tutorialDeathText.SetActive(true);
+                    GameManager.Instance.OnHitSpike?.Invoke(false);
                     isMoving = false;
                 }
             }

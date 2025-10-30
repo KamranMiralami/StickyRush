@@ -6,46 +6,31 @@ public class SpikeBehaviour : MonoBehaviour
     // [SerializeField] Renderer targetRenderer;
     [SerializeField] Animator animator;
     [SerializeField] float stateTime = 2f;
-    float currentTime = 0f;
-    bool isOpen = true;
-    public bool IsOpen()
-    {
-        return isOpen;
-        // if (targetRenderer.material.color == Color.green)
-        //     return true;
-        // else
-        //     return false;
-    }
-    // Sequence seq;
-    // private void Awake()
-    // {
-    //     //StartFlipping();
-    // }
-    // void StartFlipping()
-    // {
-    //     seq = DOTween.Sequence();
-    //     seq.Append(
-    //         targetRenderer.material.DOColor(Color.green, 2f)
-    //     );
-    //     seq.AppendInterval(2f);
-    //     seq.Append(
-    //         targetRenderer.material.DOColor(Color.red, 2f)
-    //     );
-    //     seq.AppendInterval(2f);
-    //     seq.SetLoops(-1);
-    // }
-
+    [SerializeField] float currentTime = 0f;
+    bool isOpen;
+    public bool IsOpen => isOpen;
     void Update()
     {
-        currentTime += Time.deltaTime;
+        currentTime += Time.deltaTime; 
         if (currentTime >= stateTime)
         {
+            //Debug.Log("Spike Swapping: Was open = " + isOpen, this);
             currentTime = 0f;
             if (isOpen)
+            {
                 animator.SetTrigger("Close");
+                StartCoroutine(GameManager.DoWithDelay(0.5f, () =>
+                {
+                    isOpen = false;
+                }));
+                stateTime = 2f;
+            } 
             else
+            {
                 animator.SetTrigger("Open");
-            isOpen = !isOpen;
+                isOpen = true;
+                stateTime = 1f;
+            }
         }
     }
 }
