@@ -80,8 +80,8 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             .OnComplete(() =>
             {
                 isMoving = false;
-                camShake.FrequencyGain = 100;
-                camShake.AmplitudeGain = .25f;
+                camShake.FrequencyGain = 55;
+                camShake.AmplitudeGain = .15f;
                 StartCoroutine(GameManager.DoWithDelay(.3f, () =>
                 {
                     camShake.AmplitudeGain = 0;

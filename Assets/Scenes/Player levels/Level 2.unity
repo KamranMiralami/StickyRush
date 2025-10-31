@@ -1211,22 +1211,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2031006412950812830, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2031006412950812830, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2031006412950812830, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2031006412950812830, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2091598190531675904, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1468,22 +1452,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8018788187828202824, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8768126251102829407, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8768126251102829407, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8768126251102829407, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8768126251102829407, guid: e4fe97426576ac648957f0fe3f784b68, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -10325,7 +10293,7 @@ Tilemap:
       - {fileID: 858300834, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
       - {fileID: -1587709313, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
       - {fileID: 1851929477, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
-      m_AnimationSpeed: 11
+      m_AnimationSpeed: 11.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -51, y: 1, z: 0}
@@ -10658,7 +10626,7 @@ Tilemap:
       - {fileID: -1021425508, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
       - {fileID: 1834106180, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
       - {fileID: -115484234, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
-      m_AnimationSpeed: 11.000001
+      m_AnimationSpeed: 11
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -50, y: 12, z: 0}
@@ -10744,7 +10712,7 @@ Tilemap:
       - {fileID: 858300834, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
       - {fileID: -1587709313, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
       - {fileID: 1851929477, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
-      m_AnimationSpeed: 11.000001
+      m_AnimationSpeed: 11
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -26, y: 13, z: 0}
@@ -10837,7 +10805,7 @@ Tilemap:
       - {fileID: -1021425508, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
       - {fileID: 1834106180, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
       - {fileID: -115484234, guid: 839a4694df80aba40a7fa246a1f1572e, type: 3}
-      m_AnimationSpeed: 11.000001
+      m_AnimationSpeed: 11
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -44, y: 17, z: 0}
@@ -10855,7 +10823,7 @@ Tilemap:
       - {fileID: 858300834, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
       - {fileID: -1587709313, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
       - {fileID: 1851929477, guid: f57cc21f12bd20f4b90274d58e5f2b95, type: 3}
-      m_AnimationSpeed: 11
+      m_AnimationSpeed: 11.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -50, y: 18, z: 0}
