@@ -91,7 +91,7 @@ public class PlayerManager :  SingletonBehaviour<PlayerManager>
             .OnUpdate(() =>
             {
                 if (decreaseScoreOnMove)
-                    GameManager.Instance.GivePlayerReward(-4f * Time.deltaTime);
+                    GameManager.Instance.GivePlayerReward(-2.5f * Time.deltaTime);
             });
     }
     private void Update()

@@ -35,12 +35,20 @@ public class FormController : MonoBehaviour
     public void RestartLevel()
     {
         Time.timeScale = 1f;
+        GameManager.Instance.currentLevelResults.playerQuit = true;
+        SetQuestionScores();
         GameManager.Instance.SendTelementry();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void SubmitForm()
     {
         Time.timeScale = 1f;
+        SetQuestionScores();
+        GameManager.Instance.SendTelementry();
+        SceneManager.LoadScene("LevelSelect");
+    }
+    public void SetQuestionScores()
+    {
         string text1 = inputField1.text;
         string text2 = inputField2.text;
         string text3 = inputField3.text;
@@ -96,7 +104,5 @@ public class FormController : MonoBehaviour
         {
             GameManager.Instance.currentLevelResults.Q11 = number11;
         }
-        GameManager.Instance.SendTelementry();
-        SceneManager.LoadScene("LevelSelect");
     }
 }

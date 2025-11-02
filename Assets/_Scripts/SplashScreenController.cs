@@ -5,7 +5,10 @@ public class SplashScreenController : MonoBehaviour
 {
     [SerializeField] GameObject spaceText;
     [SerializeField] GameObject consentForm;
-    
+    private void Start()
+    {
+        Application.targetFrameRate = 120;
+    }
     // Update is called once per frame
     void Update()
     {
